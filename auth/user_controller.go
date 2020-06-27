@@ -20,7 +20,7 @@ func (controller UserController) AddRouters() *restful.WebService {
   ws := new(restful.WebService)
   ws.Path("/api/v1/user").Consumes(restful.MIME_JSON).Produces(restful.MIME_JSON)
   ws.Route(ws.POST("/register").To(register))
-  //ws.Route(ws.POST("/login").To(login))
+  ws.Route(ws.POST("/login").To(login))
   return ws
 }
 
