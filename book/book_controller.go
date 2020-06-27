@@ -1,11 +1,16 @@
-package book import (
+package book
+
+import (
 	"github.com/emicklei/go-restful"
 	"github.com/globalsign/mgo"
 	"github.com/globalsign/mgo/bson"
 	"gitlab.com/bytecraze/go-restful-api/auth"
-	"gitlab.com/bytecraze/go-restful-api/db" )
+	"gitlab.com/bytecraze/go-restful-api/db"
+)
+
 type BookController struct {
 }
+
 func (controller BookController) AddRouters() *restful.WebService {
 	ws := new(restful.WebService)
 	ws.Path("/api/v1/book").Consumes(restful.MIME_JSON).Produces(restful.MIME_JSON)
@@ -14,8 +19,10 @@ func (controller BookController) AddRouters() *restful.WebService {
 	ws.Route(ws.GET("/{bookId}").Filter(auth.BearerAuth).To(getBook))
 	ws.Route(ws.PUT("/{bookId}").Filter(auth.BearerAuth).To(updateBook))
 	ws.Route(ws.DELETE("/{bookId}").Filter(auth.BearerAuth).To(deleteBook))
+
 	return ws
 }
+
 func createBook(req *restful.Request, resp *restful.Response) {
 	book := Book{}
 	err := req.ReadEntity(&book)
@@ -23,6 +30,7 @@ func createBook(req *restful.Request, resp *restful.Response) {
 		resp.WriteHeaderAndEntity(400, "invalid request")
 		return
 	}
+
 	book.ID = bson.NewObjectId()
 	session := db.NewDBSession()
 	defer session.Close()
@@ -32,8 +40,10 @@ func createBook(req *restful.Request, resp *restful.Response) {
 		resp.WriteError(500, err)
 		return
 	}
+
 	resp.WriteEntity(book)
 }
+
 func listBooks(req *restful.Request, resp *restful.Response) {
 	allBooks := make([]Book, 0)
 	session := db.NewDBSession()
@@ -44,8 +54,10 @@ func listBooks(req *restful.Request, resp *restful.Response) {
 		resp.WriteError(500, err)
 		return
 	}
+
 	resp.WriteEntity(allBooks)
 }
+
 func getBook(req *restful.Request, resp *restful.Response) {
 	bookId := req.PathParameter("bookId")
 	book := Book{}
@@ -61,8 +73,10 @@ func getBook(req *restful.Request, resp *restful.Response) {
 		}
 		return
 	}
+
 	resp.WriteEntity(book)
 }
+
 func updateBook(req *restful.Request, resp *restful.Response) {
 	bookId := req.PathParameter("bookId")
 	book := Book{}
@@ -71,6 +85,7 @@ func updateBook(req *restful.Request, resp *restful.Response) {
 		resp.WriteHeaderAndEntity(400, "invald request")
 		return
 	}
+
 	book.ID = bson.ObjectIdHex(bookId)
 	session := db.NewDBSession()
 	defer session.Close()
@@ -84,10 +99,13 @@ func updateBook(req *restful.Request, resp *restful.Response) {
 		}
 		return
 	}
+
 	resp.WriteEntity(book)
 }
+
 func deleteBook(req *restful.Request, resp *restful.Response) {
 	bookId := req.PathParameter("bookId")
+
 	session := db.NewDBSession()
 	defer session.Close()
 	c := session.DB("").C("book")
@@ -100,5 +118,6 @@ func deleteBook(req *restful.Request, resp *restful.Response) {
 		}
 		return
 	}
+
 	resp.WriteHeader(200)
 }
