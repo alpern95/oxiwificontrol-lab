@@ -85,3 +85,35 @@ func register(req *restful.Request, resp *restful.Response) {
   user.Password = ""
   resp.WriteEntity(user)
 }
+
+func login(req *restful.Request, resp *restful.Response) {
+  user := &User{}
+  err := req.ReadEntity(user)
+  if err != nil {
+    resp.WriteHeaderAndEntity(400, "invalid request")
+    return
+  }
+
+  session := db.NewDBSession()
+  defer session.Close()
+  existingUser := User{}
+  c := session.DB("").C("user")
+  err = c.Find(bson.M{"username": user.Username}).One(&existingUser)
+  if err != nil {
+    if err == mgo.ErrNotFound {
+      resp.WriteHeaderAndEntity(400, "invalid login")
+      return
+    } else {
+      resp.WriteHeaderAndEntity(500, "server error")
+      return
+    }
+  }
+
+  if !comparePasswords(existingUser.Password, user.Password) {
+    resp.WriteHeaderAndEntity(400, "invalid login")
+    return
+  }
+
+  existingUser.Password = ""
+  resp.WriteEntity(existingUser)
+}
