@@ -1,13 +1,11 @@
 package book
 
 import (
-	"time"
-
 	"github.com/globalsign/mgo/bson"
 )
 
 type Book struct {
-	ID          bson.ObjectId `json:"id"`
-	Name        string        `json:"name"`
-	Author      string        `json:"author"`
+	ID     bson.ObjectId `json:"id" bson:"_id"`
+	Name   string        `json:"name" bson:"name"`
+	Author string        `json:"author" bson:"author"`
 }
