@@ -4,7 +4,7 @@ import (
 	"github.com/emicklei/go-restful"
 	"github.com/globalsign/mgo"
 	"github.com/globalsign/mgo/bson"
-	//"github.com/alpern95/go-restful-api/auth"
+	"github.com/alpern95/go-restful-api/auth"
 	"github.com/alpern95/go-restful-api/db"
 )
 
