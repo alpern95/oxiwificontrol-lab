@@ -9,7 +9,7 @@ import (
 	"github.com/globalsign/mgo"
 	"github.com/globalsign/mgo/bson"
 	"github.com/rs/xid"
-	"gitlab.com/bytecraze/go-restful-api/db"
+	"github.com/alpern95/go-restful-api/db"
 	"golang.org/x/crypto/bcrypt"
 )
 

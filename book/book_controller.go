@@ -4,8 +4,8 @@ import (
 	"github.com/emicklei/go-restful"
 	"github.com/globalsign/mgo"
 	"github.com/globalsign/mgo/bson"
-	//"gitlab.com/bytecraze/go-restful-api/auth"
-	"gitlab.com/bytecraze/go-restful-api/db"
+	"github.com/alpern95/go-restful-api/auth"
+	"github.com/alpern95/go-restful-api/db"
 )
 
 type BookController struct {
@@ -14,20 +14,20 @@ type BookController struct {
 func (controller BookController) AddRouters() *restful.WebService {
 	ws := new(restful.WebService)
 	ws.Path("/api/v1/book").Consumes(restful.MIME_JSON).Produces(restful.MIME_JSON)
-	//ws.Route(ws.POST("/").Filter(auth.BearerAuth).To(createBook))
-    ws.Route(ws.POST("/").To(createBook))
+	ws.Route(ws.POST("/").Filter(auth.BearerAuth).To(createBook))
+    //ws.Route(ws.POST("/").To(createBook))
     
-	//ws.Route(ws.GET("/").Filter(auth.BearerAuth).To(listBooks))
-	ws.Route(ws.GET("/").To(listBooks))
+	ws.Route(ws.GET("/").Filter(auth.BearerAuth).To(listBooks))
+	//ws.Route(ws.GET("/").To(listBooks))
 	
-	//ws.Route(ws.GET("/{bookId}").Filter(auth.BearerAuth).To(getBook))
-	ws.Route(ws.GET("/{bookId}").To(getBook))
+	ws.Route(ws.GET("/{bookId}").Filter(auth.BearerAuth).To(getBook))
+	//ws.Route(ws.GET("/{bookId}").To(getBook))
 
-	//ws.Route(ws.PUT("/{bookId}").Filter(auth.BearerAuth).To(updateBook))
-	ws.Route(ws.PUT("/{bookId}").To(updateBook))
+	ws.Route(ws.PUT("/{bookId}").Filter(auth.BearerAuth).To(updateBook))
+	//ws.Route(ws.PUT("/{bookId}").To(updateBook))
 	
-	//ws.Route(ws.DELETE("/{bookId}").Filter(auth.BearerAuth).To(deleteBook))
-	ws.Route(ws.DELETE("/{bookId}").To(deleteBook))
+	ws.Route(ws.DELETE("/{bookId}").Filter(auth.BearerAuth).To(deleteBook))
+	//ws.Route(ws.DELETE("/{bookId}").To(deleteBook))
 
 	return ws
 }

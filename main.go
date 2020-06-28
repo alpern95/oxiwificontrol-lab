@@ -5,7 +5,7 @@ import (
 	"net/http"
 
 	"github.com/emicklei/go-restful"
-	//"github.com/alpern95/go-restful-api/auth"
+	"github.com/alpern95/go-restful-api/auth"
 	"github.com/alpern95/go-restful-api/book"
 	"github.com/alpern95/go-restful-api/db"
 )
@@ -16,7 +16,7 @@ func main() {
 
 	wsContainer := restful.NewContainer()
 	wsContainer.Add(book.BookController{}.AddRouters())
-	//wsContainer.Add(auth.UserController{}.AddRouters())
+	wsContainer.Add(auth.UserController{}.AddRouters())
 
 	// Add container filter to enable CORS
 	cors := restful.CrossOriginResourceSharing{
