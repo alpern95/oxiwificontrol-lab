@@ -17,17 +17,17 @@ func (controller BookController) AddRouters() *restful.WebService {
 	//ws.Route(ws.POST("/").Filter(auth.BearerAuth).To(createBook))
     ws.Route(ws.POST("/").To(createBook))
     
-	//ws.Route(ws.GET("/").Filter(auth.BearerAuth).To(listBooks))
-	ws.Route(ws.GET("/").To(listBooks))
+	ws.Route(ws.GET("/").Filter(auth.BearerAuth).To(listBooks))
+	//ws.Route(ws.GET("/").To(listBooks))
 	
-	//ws.Route(ws.GET("/{bookId}").Filter(auth.BearerAuth).To(getBook))
-	ws.Route(ws.GET("/{bookId}").To(getBook))
+	ws.Route(ws.GET("/{bookId}").Filter(auth.BearerAuth).To(getBook))
+	//ws.Route(ws.GET("/{bookId}").To(getBook))
 
-	//ws.Route(ws.PUT("/{bookId}").Filter(auth.BearerAuth).To(updateBook))
-	ws.Route(ws.PUT("/{bookId}").To(updateBook))
+	ws.Route(ws.PUT("/{bookId}").Filter(auth.BearerAuth).To(updateBook))
+	//ws.Route(ws.PUT("/{bookId}").To(updateBook))
 	
-	//ws.Route(ws.DELETE("/{bookId}").Filter(auth.BearerAuth).To(deleteBook))
-	ws.Route(ws.DELETE("/{bookId}").To(deleteBook))
+	ws.Route(ws.DELETE("/{bookId}").Filter(auth.BearerAuth).To(deleteBook))
+	//ws.Route(ws.DELETE("/{bookId}").To(deleteBook))
 
 	return ws
 }
