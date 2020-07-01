@@ -6,6 +6,7 @@ import (
 	"github.com/globalsign/mgo/bson"
 	"github.com/alpern95/go-restful-api/auth"
 	"github.com/alpern95/go-restful-api/db"
+	"log"
 )
 
 type BorneController struct {
@@ -119,7 +120,7 @@ func updateBorne(req *restful.Request, resp *restful.Response) {
 
 func deleteBorne(req *restful.Request, resp *restful.Response) {
 	borneId := req.PathParameter("borneId")
-
+    log.Printf("les bornes id" %s",borneId)
 	session := db.NewDBSession()
 	defer session.Close()
 	c := session.DB("").C("borne")
@@ -132,6 +133,6 @@ func deleteBorne(req *restful.Request, resp *restful.Response) {
 		}
 		return
 	}
-
+    log.Printf("les bornes id: %s", borneId)  // Ajout AP
 	resp.WriteHeader(200)
 }
