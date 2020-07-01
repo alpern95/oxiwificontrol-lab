@@ -65,11 +65,11 @@ func register(req *restful.Request, resp *restful.Response) {
 		resp.WriteHeaderAndEntity(400, "invalid request")
 		return
 	}
-	if len(strings.TrimSpace(user.Username)) < 6 {
+	if len(strings.TrimSpace(user.Username)) < 5 {
 		resp.WriteHeaderAndEntity(400, "username too short")
 		return
 	}
-	if len(strings.TrimSpace(user.Password)) < 8 {
+	if len(strings.TrimSpace(user.Password)) < 5 {
 		resp.WriteHeaderAndEntity(400, "password too short")
 		return
 	}

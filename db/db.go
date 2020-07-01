@@ -7,7 +7,7 @@ import (
 var gSession *mgo.Session = nil
 
 func InitDB() error {
-	session, err := mgo.Dial("mongodb://localhost:27017/apitest")
+	session, err := mgo.Dial("mongodb://localhost:27017/oxiwificontrol")
 	if err != nil {
 		return err
 	}
