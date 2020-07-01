@@ -41,6 +41,7 @@ func createBorne(req *restful.Request, resp *restful.Response) {
 	session := db.NewDBSession()
 	defer session.Close()
 	c := session.DB("").C("borne")
+
 	err = c.Insert(borne)
 	if err != nil {
 		resp.WriteError(500, err)
@@ -52,6 +53,9 @@ func createBorne(req *restful.Request, resp *restful.Response) {
 
 func listBornes(req *restful.Request, resp *restful.Response) {
 	allBornes := make([]Borne, 0)
+	//totalBorne := make([]Borne, 0)
+	totalBorne := len(allBornes)
+	//allBornes = allBornes,totalBorne
 	session := db.NewDBSession()
 	defer session.Close()
 	c := session.DB("").C("borne")
@@ -61,7 +65,11 @@ func listBornes(req *restful.Request, resp *restful.Response) {
 		return
 	}
 
+    resp.AddHeader("X-TOTAL-COUNT",string(totalBorne) )
 	resp.WriteEntity(allBornes)
+	//resp.WriteJson("nombre" ,totalBorne)
+	//resp.WriteJson(totalResp,"")
+	
 }
 
 func getBorne(req *restful.Request, resp *restful.Response) {
