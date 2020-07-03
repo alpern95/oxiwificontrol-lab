@@ -1,17 +1,36 @@
-import React from 'react';
-import { Admin } from 'react-admin';
+//  in src/App.js
+import * as React from "react";
+import { Admin, Resource } from 'react-admin';
+
 import jsonServerProvider from 'ra-data-json-server';
-import {UserList} from "./components/users";
 
-//connect the data provider to the REST endpoint
-const dataProvider = jsonServerProvider('http://192.168.1.32');
+import { fetchUtils } from 'react-admin';
 
-function App() {
- return (
-     <Admin dataProvider={dataProvider} >
-         <Resource name="users" list={UserList}/>
-     </Admin>
- );
+//import authProvider from "./providers/authProvider";
+//import {
+//	   FirebaseAuthProvider,
+//	   } from 'react-admin-firebase';
+
+//import { ListGuesser } from 'react-admin';
+import { UserList,UserCreate } from './users';
+import { BorneList,BorneCreate } from './bornes';
+import { GroupeList ,GroupeCreate} from './groupes';
+
+const fetchJson = (url, options = {}) => {
+    if (!options.headers) {
+        options.headers = new Headers({ Accept: 'application/json' });
+    }
+    // add your own headers here
+    options.headers.set('X-Custom-Header', 'users');
+    return fetchUtils.fetchJson(url, options);
 }
 
+const dataProvider = jsonServerProvider('http://192.168.1.32:3000/api/v1',fetchJson);
+const App = () => (
+    <Admin dataProvider={dataProvider}>
+    <Resource name="user" list={UserList} create={UserCreate} />
+    <Resource name="borne" list={BorneList} create={BorneCreate} />
+    <Resource name="groupe" list={GroupeList} create={GroupeCreate} />
+    </Admin>
+)
 export default App;

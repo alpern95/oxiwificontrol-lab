@@ -6,7 +6,7 @@ import (
 	"github.com/globalsign/mgo/bson"
 	"github.com/alpern95/go-restful-api/auth"
 	"github.com/alpern95/go-restful-api/db"
-	"log"
+	//"log"
 )
 
 type BorneController struct {
@@ -15,11 +15,11 @@ type BorneController struct {
 func (controller BorneController) AddRouters() *restful.WebService {
 	ws := new(restful.WebService)
 	ws.Path("/api/v1/borne").Consumes(restful.MIME_JSON).Produces(restful.MIME_JSON)
-	ws.Route(ws.POST("/").Filter(auth.BearerAuth).To(createBorne))
-    //ws.Route(ws.POST("/").To(createBorne))
+	//ws.Route(ws.POST("/").Filter(auth.BearerAuth).To(createBorne))
+    ws.Route(ws.POST("/").To(createBorne))
     
-	ws.Route(ws.GET("/").Filter(auth.BearerAuth).To(listBornes))
-	//ws.Route(ws.GET("/").To(listBornes))
+	//ws.Route(ws.GET("/").Filter(auth.BearerAuth).To(listBornes))
+	ws.Route(ws.GET("/").To(listBornes))
 	
 	ws.Route(ws.GET("/{borneId}").Filter(auth.BearerAuth).To(getBorne))
 

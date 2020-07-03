@@ -23,12 +23,15 @@ func main() {
 	wsContainer.Add(groupe.GroupeController{}.AddRouters())
 
 	// Add container filter to enable CORS
+	
 	cors := restful.CrossOriginResourceSharing{
-	    AllowedDomains: []string{"http://192.168.1.32:3000"}, 
-		AllowedHeaders: []string{"Content-Type", "Accept", "Authorization"},
-		AllowedMethods: []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+	    AllowedDomains: []string{"192.168.1.48"}, 
+		AllowedHeaders: []string{"Origin","Content-Type", "Accept", "Authorization"},
+		AllowedMethods: []string{"GET", "POST", "PUT","PARCH", "DELETE","HEAD", "OPTIONS"},
+		ExposeHeaders:  []string{"X-Total-Count","x-custom-header"},
 		CookiesAllowed: false,
 		Container:      wsContainer}
+
 	wsContainer.Filter(cors.Filter)
 
 	host := "192.168.1.32:3000"

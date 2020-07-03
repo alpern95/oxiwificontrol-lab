@@ -119,7 +119,7 @@ func updateGroupe(req *restful.Request, resp *restful.Response) {
 
 func deleteGroupe(req *restful.Request, resp *restful.Response) {
     groupeId := req.PathParameter("groupeId")
-    var id bson.ObjectId = bson.ObjectIdHex(borneId) // correction bug
+    var id bson.ObjectId = bson.ObjectIdHex(groupeId) // correction bug
     session := db.NewDBSession()
     defer session.Close()
     c := session.DB("").C("groupe")
