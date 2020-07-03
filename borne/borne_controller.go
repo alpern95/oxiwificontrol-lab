@@ -15,8 +15,8 @@ type BorneController struct {
 func (controller BorneController) AddRouters() *restful.WebService {
 	ws := new(restful.WebService)
 	ws.Path("/api/v1/borne").Consumes(restful.MIME_JSON).Produces(restful.MIME_JSON)
-	//ws.Route(ws.POST("/").Filter(auth.BearerAuth).To(createBorne))
-    ws.Route(ws.POST("/").To(createBorne))
+	ws.Route(ws.POST("/").Filter(auth.BearerAuth).To(createBorne))
+    //ws.Route(ws.POST("/").To(createBorne))
     
 	ws.Route(ws.GET("/").Filter(auth.BearerAuth).To(listBornes))
 	//ws.Route(ws.GET("/").To(listBornes))
@@ -25,7 +25,8 @@ func (controller BorneController) AddRouters() *restful.WebService {
 
 	ws.Route(ws.PUT("/{borneId}").Filter(auth.BearerAuth).To(updateBorne))
 	
-	ws.Route(ws.DELETE("/{borneId}").Filter(auth.BearerAuth).To(deleteBorne))
+	//ws.Route(ws.DELETE("/{borneId}").Filter(auth.BearerAuth).To(deleteBorne))
+	ws.Route(ws.DELETE("/{borneId}").To(deleteBorne))
 
 	return ws
 }
@@ -120,11 +121,13 @@ func updateBorne(req *restful.Request, resp *restful.Response) {
 
 func deleteBorne(req *restful.Request, resp *restful.Response) {
 	borneId := req.PathParameter("borneId")
-    log.Printf("les bornes id" %s",borneId)
+	var id bson.ObjectId = bson.ObjectIdHex(borneId) // correction bug
+    //log.Printf("la borne id %s",id)
 	session := db.NewDBSession()
 	defer session.Close()
 	c := session.DB("").C("borne")
-	err := c.RemoveId(borneId)
+	//err := c.RemoveId(borneId)              // Bug 
+	err := c.Remove(bson.M{"_id": &id})       // correction
 	if err != nil {
 		if err == mgo.ErrNotFound {
 			resp.WriteError(404, err)
@@ -133,6 +136,5 @@ func deleteBorne(req *restful.Request, resp *restful.Response) {
 		}
 		return
 	}
-    log.Printf("les bornes id: %s", borneId)  // Ajout AP
 	resp.WriteHeader(200)
 }
