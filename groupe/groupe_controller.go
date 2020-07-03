@@ -118,20 +118,20 @@ func updateGroupe(req *restful.Request, resp *restful.Response) {
 }
 
 func deleteGroupe(req *restful.Request, resp *restful.Response) {
-	groupeId := req.PathParameter("groupeId")
-
-	session := db.NewDBSession()
-	defer session.Close()
-	c := session.DB("").C("groupe")
-	err := c.RemoveId(groupeId)
-	if err != nil {
-		if err == mgo.ErrNotFound {
-			resp.WriteError(404, err)
-		} else {
-			resp.WriteError(500, err)
-		}
-		return
-	}
-
-	resp.WriteHeader(200)
+    groupeId := req.PathParameter("groupeId")
+    var id bson.ObjectId = bson.ObjectIdHex(borneId) // correction bug
+    session := db.NewDBSession()
+    defer session.Close()
+    c := session.DB("").C("groupe")
+    //err := c.RemoveId(groupeId)
+    err := c.Remove(bson.M{"_id": &id})
+    if err != nil {
+        if err == mgo.ErrNotFound {
+            resp.WriteError(404, err)
+        } else {
+            resp.WriteError(500, err)
+        }
+        return
+    }
+    resp.WriteHeader(200)
 }

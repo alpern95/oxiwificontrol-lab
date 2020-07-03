@@ -1,26 +1,17 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Admin } from 'react-admin';
+import jsonServerProvider from 'ra-data-json-server';
+import {UserList} from "./components/users";
+
+//connect the data provider to the REST endpoint
+const dataProvider = jsonServerProvider('http://192.168.1.32');
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+ return (
+     <Admin dataProvider={dataProvider} >
+         <Resource name="users" list={UserList}/>
+     </Admin>
+ );
 }
 
 export default App;
