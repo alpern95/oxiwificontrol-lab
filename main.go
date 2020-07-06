@@ -8,7 +8,8 @@ import (
 	"github.com/alpern95/go-restful-api/auth"
 	//"github.com/alpern95/go-restful-api/book"
 	"github.com/alpern95/go-restful-api/borne"
-	"github.com/alpern95/go-restful-api/groupe"
+	//"github.com/alpern95/go-restful-api/groupe"
+	"github.com/alpern95/go-restful-api/credential"
 	"github.com/alpern95/go-restful-api/db"
 )
 
