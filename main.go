@@ -18,13 +18,12 @@ func main() {
 	db.InitDB()
 
 	wsContainer := restful.NewContainer()
-	//wsContainer.Add(book.BookController{}.AddRouters())
+        wsContainer.Add(credential.CredentialController{}.AddRouters())
 	wsContainer.Add(borne.BorneController{}.AddRouters())
 	wsContainer.Add(auth.UserController{}.AddRouters())
-	wsContainer.Add(groupe.GroupeController{}.AddRouters())
 
 	// Add container filter to enable CORS
-	
+
 	cors := restful.CrossOriginResourceSharing{
 	    AllowedDomains: []string{"192.168.1.48"}, 
 		AllowedHeaders: []string{"Origin","Content-Type", "Accept", "Authorization"},
