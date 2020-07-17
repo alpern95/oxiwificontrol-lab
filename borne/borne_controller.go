@@ -7,6 +7,7 @@ import (
 	"github.com/alpern95/go-restful-api/auth"
 	"github.com/alpern95/go-restful-api/db"
 	//"log"
+	"strconv"
 )
 
 type BorneController struct {
@@ -15,18 +16,21 @@ type BorneController struct {
 func (controller BorneController) AddRouters() *restful.WebService {
 	ws := new(restful.WebService)
 	ws.Path("/api/v1/borne").Consumes(restful.MIME_JSON).Produces(restful.MIME_JSON)
-	//ws.Route(ws.POST("/").Filter(auth.BearerAuth).To(createBorne))
-    ws.Route(ws.POST("/").To(createBorne))
-    
+	ws.Route(ws.POST("/").Filter(auth.BearerAuth).To(createBorne))
+    //ws.Route(ws.POST("/").To(createBorne))
+
 	//ws.Route(ws.GET("/").Filter(auth.BearerAuth).To(listBornes))
 	ws.Route(ws.GET("/").To(listBornes))
+
+	//ws.Route(ws.GET("/{borneId}").Filter(auth.BearerAuth).To(getBorne))
+	  ws.Route(ws.GET("/{borneId}").To(getBorne))
 	
-	ws.Route(ws.GET("/{borneId}").Filter(auth.BearerAuth).To(getBorne))
+	ws.Route(ws.GET("/{utilisateur}").Filter(auth.BearerAuth).To(getBorneuser))
 
 	ws.Route(ws.PUT("/{borneId}").Filter(auth.BearerAuth).To(updateBorne))
-	
-	//ws.Route(ws.DELETE("/{borneId}").Filter(auth.BearerAuth).To(deleteBorne))
-	ws.Route(ws.DELETE("/{borneId}").To(deleteBorne))
+
+	ws.Route(ws.DELETE("/{borneId}").Filter(auth.BearerAuth).To(deleteBorne))
+	//ws.Route(ws.DELETE("/{borneId}").To(deleteBorne))
 
 	return ws
 }
@@ -56,8 +60,8 @@ func createBorne(req *restful.Request, resp *restful.Response) {
 func listBornes(req *restful.Request, resp *restful.Response) {
 	allBornes := make([]Borne, 0)
 	//totalBorne := make([]Borne, 0)
-	totalBorne := len(allBornes)
-	//allBornes = allBornes,totalBorne
+	//totalBorne := len(allBornes)
+    //allBornes = allBornes,totalBorne
 	session := db.NewDBSession()
 	defer session.Close()
 	c := session.DB("").C("borne")
@@ -66,12 +70,12 @@ func listBornes(req *restful.Request, resp *restful.Response) {
 		resp.WriteError(500, err)
 		return
 	}
-
-    resp.AddHeader("X-TOTAL-COUNT",string(totalBorne) )
+    totalBorne := len(allBornes)
+    //log.Printf("talaborne: %s", totalBorne)
+    resp.AddHeader("X-TOTAL-COUNT", strconv.Itoa(totalBorne) )
+    resp.AddHeader("Access-Control-Allow-Origin","http://192.168.1.32:3001")
+    //resp.AddHeader("Access-Control-Allow-Origin","http://192.168.1.32:3001")
 	resp.WriteEntity(allBornes)
-	//resp.WriteJson("nombre" ,totalBorne)
-	//resp.WriteJson(totalResp,"")
-	
 }
 
 func getBorne(req *restful.Request, resp *restful.Response) {
@@ -92,6 +96,26 @@ func getBorne(req *restful.Request, resp *restful.Response) {
 
 	resp.WriteEntity(borne)
 }
+
+func getBorneuser(req *restful.Request, resp *restful.Response) {
+       //utilisateur := req.PathParameter("utilisateur")
+        borne := Borne{}
+        session := db.NewDBSession()
+        defer session.Close()
+       //c := session.DB("").C("borne")
+       //err := c.Find(bson.M{"Utilisateurs": "utilisateurs[utilisateur]" }).All
+       //if err != nil {
+         //      if err == mgo.ErrNotFound {
+         //              resp.WriteError(404, err)
+         //      } else {
+         //              resp.WriteError(500, err)
+         //      }
+         //      return
+       //}
+
+        resp.WriteEntity(borne)
+}
+
 
 func updateBorne(req *restful.Request, resp *restful.Response) {
 	borneId := req.PathParameter("borneId")

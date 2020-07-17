@@ -6,10 +6,8 @@ import (
 
 	"github.com/emicklei/go-restful"
 	"github.com/alpern95/go-restful-api/auth"
-	//"github.com/alpern95/go-restful-api/book"
 	"github.com/alpern95/go-restful-api/borne"
 	//"github.com/alpern95/go-restful-api/groupe"
-	"github.com/alpern95/go-restful-api/credential"
 	"github.com/alpern95/go-restful-api/db"
 )
 
@@ -18,19 +16,18 @@ func main() {
 	db.InitDB()
 
 	wsContainer := restful.NewContainer()
-        wsContainer.Add(credential.CredentialController{}.AddRouters())
 	wsContainer.Add(borne.BorneController{}.AddRouters())
 	wsContainer.Add(auth.UserController{}.AddRouters())
 
 	// Add container filter to enable CORS
 
 	cors := restful.CrossOriginResourceSharing{
-	    AllowedDomains: []string{"192.168.1.48"}, 
-		AllowedHeaders: []string{"Origin","Content-Type", "Accept", "Authorization"},
-		AllowedMethods: []string{"GET", "POST", "PUT","PARCH", "DELETE","HEAD", "OPTIONS"},
-		ExposeHeaders:  []string{"X-Total-Count","x-custom-header"},
-		CookiesAllowed: false,
-		Container:      wsContainer}
+        //AllowedDomains: []string{"http://192.168.1.32:3001"}, 
+        //AllowedHeaders: []string{"Origin","Content-Type", "Accept", "Authorization"},
+        AllowedMethods: []string{"GET", "POST", "PUT","PATCH", "DELETE","HEAD", "OPTIONS"},
+        ExposeHeaders:  []string{"X-Total-Count","x-custom-header","Access-Control-Allow-Origin"},
+        CookiesAllowed: false,
+        Container:      wsContainer}
 
 	wsContainer.Filter(cors.Filter)
 

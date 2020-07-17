@@ -29,6 +29,7 @@ func login(req *restful.Request, resp *restful.Response) {
 	user := &User{}
 	err := req.ReadEntity(user)
 	if err != nil {
+        resp.AddHeader("Access-Control-Allow-Origin","http://192.168.1.32:3001")
 		resp.WriteHeaderAndEntity(400, "invalid request")
 		return
 	}
