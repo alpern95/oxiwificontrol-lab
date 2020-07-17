@@ -11,7 +11,8 @@
     "react": "^16.13.1",
     "react-admin": "^3.6.2",
     "react-dom": "^16.13.1",
-    "react-scripts": "3.4.1"
+    "react-scripts": "3.4.1",
+    "websocket-extensions": "^0.1.4"
   },
   "scripts": {
     "start": "react-scripts start",
