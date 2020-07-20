@@ -1,21 +1,11 @@
 //  in src/App.js
 import * as React from "react";
 import { Admin, Resource } from 'react-admin';
-
 import jsonServerProvider from 'ra-data-json-server';
-
 import { fetchUtils } from 'react-admin';
 import authProvider from './authProvider';
 import Dashboard from './Dashboard';
-
-//import authProvider from "./providers/authProvider";
-//import {
-//	   FirebaseAuthProvider,
-//	   } from 'react-admin-firebase';
-
-//import { ListGuesser } from 'react-admin';
-import { BorneList,BorneCreate } from './bornes';
-import { GroupeList ,GroupeCreate} from './groupes';
+import { BorneList, BorneEdit} from './bornes';
 
 const fetchJson = (url, options = {}) => {
     if (!options.headers) {
@@ -29,8 +19,7 @@ const fetchJson = (url, options = {}) => {
 const dataProvider = jsonServerProvider('http://192.168.1.32:3000/api/v1',fetchJson);
 const App = () => (
     <Admin dashboard={Dashboard} authProvider={authProvider} dataProvider={dataProvider}>
-    <Resource name="borne" list={BorneList} create={BorneCreate} />
-    <Resource name="groupe" list={GroupeList} create={GroupeCreate} />
+    <Resource name="borne" list={BorneList} edit={BorneEdit} />
     </Admin>
 )
 export default App;

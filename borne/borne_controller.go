@@ -73,7 +73,7 @@ func listBornes(req *restful.Request, resp *restful.Response) {
     totalBorne := len(allBornes)
     //log.Printf("talaborne: %s", totalBorne)
     resp.AddHeader("X-TOTAL-COUNT", strconv.Itoa(totalBorne) )
-    resp.AddHeader("Access-Control-Allow-Origin","http://192.168.1.32:3001")
+    ///resp.AddHeader("Access-Control-Allow-Origin","http://192.168.1.32:3001")
     //resp.AddHeader("Access-Control-Allow-Origin","http://192.168.1.32:3001")
 	resp.WriteEntity(allBornes)
 }
