@@ -29,7 +29,8 @@ func login(req *restful.Request, resp *restful.Response) {
 	user := &User{}
 	err := req.ReadEntity(user)
 	if err != nil {
-        resp.AddHeader("Access-Control-Allow-Origin","http://192.168.1.32:3001")
+        //resp.AddHeader("Access-Control-Allow-Origin","*")
+        //resp.AddHeader("Access-Control-Allow-Origin","http://192.168.1.32")
 		resp.WriteHeaderAndEntity(400, "invalid request")
 		return
 	}
@@ -42,20 +43,23 @@ func login(req *restful.Request, resp *restful.Response) {
 
 	if err != nil {
 		if err == mgo.ErrNotFound {
+		    //resp.AddHeader("Access-Control-Allow-Origin","http://192.168.1.32")
 			resp.WriteHeaderAndEntity(400, "invalid login")
 			return
 		} else {
+		    //resp.AddHeader("Access-Control-Allow-Origin","http://192.168.1.32")
 			resp.WriteHeaderAndEntity(500, "server error")
 			return
 		}
 	}
 
 	if !comparePasswords(existingUser.Password, user.Password) {
+	    //resp.AddHeader("Access-Control-Allow-Origin","http://192.168.1.32")
 		resp.WriteHeaderAndEntity(400, "invalid login")
 		return
 	}
-
 	existingUser.Password = ""
+	//resp.AddHeader("Access-Control-Allow-Origin","http://192.168.1.32")
 	resp.WriteEntity(existingUser)
 }
 

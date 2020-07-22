@@ -7,9 +7,8 @@ export const BorneList = props => (
             <TextField source="nom" />
             <TextField source="description" /> 
             <TextField source="device" />
-            <TextField source="Description" />
             <TextField source="adresse" />
-            <TextField source="Groupe" />
+            <TextField source="groupe" />
             <TextField source="modele" />
             <TextField source="username" />
             <TextField source="password" />
@@ -17,7 +16,6 @@ export const BorneList = props => (
             <TextField source="interface" />
             <TextField source="etat" />
             <TextField source="lastrefresh" />
-            <TextField source="utilisateurs" />
             <EditButton />
         </Datagrid>
     </List>

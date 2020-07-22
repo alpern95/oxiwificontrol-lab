@@ -11,6 +11,7 @@ type Borne struct {
 	Description    string   `json:"description"    bson:"description"`
 	Device         string   `json:"device"         bson:"device"`
 	Adresse        string   `json:"adresse"        bson:"adresse"`
+	Groupe         string   `json:"groupe"         bson:"groupe"`
 	Modele         string   `json:"modele"         bson:"modele"`
 	Username       string   `json:"username"       bson:"username"`
 	Password       string   `json:"password"       bson:"password"`
@@ -18,5 +19,4 @@ type Borne struct {
 	Interface      string   `json:"interface"      bson:"interface"`
 	Etat           string   `json:"etat"           bson:"etat"`
 	Lastrefresh    string   `json:"lastrefresh"    bson:"lastrefresh"`
-	Utilisateurs  []string  `json:"utilisateurs"   bson:"utilisateurs"`
 }

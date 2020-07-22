@@ -17,9 +17,11 @@ const fetchJson = (url, options = {}) => {
 }
 
 const dataProvider = jsonServerProvider('http://192.168.1.32:3000/api/v1',fetchJson);
+
 const App = () => (
     <Admin dashboard={Dashboard} authProvider={authProvider} dataProvider={dataProvider}>
     <Resource name="borne" list={BorneList} edit={BorneEdit} />
     </Admin>
 )
+
 export default App;

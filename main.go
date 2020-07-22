@@ -22,15 +22,18 @@ func main() {
 	// Add container filter to enable CORS
 
 	cors := restful.CrossOriginResourceSharing{
-        //AllowedDomains: []string{"http://192.168.1.32:3001"}, 
-        //AllowedHeaders: []string{"Origin","Content-Type", "Accept", "Authorization"},
+	    //Debug: true,
         AllowedMethods: []string{"GET", "POST", "PUT","PATCH", "DELETE","HEAD", "OPTIONS"},
+        AllowedHeaders: []string{"Content-Type","X-Total-Count", "Accept"},
+        //AllowedHeaders: []string{"Content-Type"},     
         ExposeHeaders:  []string{"X-Total-Count","x-custom-header","Access-Control-Allow-Origin"},
+        //ExposeHeaders:  []string{"X-Total-Count","Access-Control-Allow-Origin"},
         CookiesAllowed: false,
         Container:      wsContainer}
 
 	wsContainer.Filter(cors.Filter)
-
+    wsContainer.Filter(wsContainer.OPTIONSFilter)
+    
 	host := "192.168.1.32:3000"
 	log.Printf("listening on: %s", host)
 	server := &http.Server{Addr: host, Handler: wsContainer}
