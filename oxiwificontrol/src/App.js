@@ -5,7 +5,7 @@ import jsonServerProvider from 'ra-data-json-server';
 import { fetchUtils } from 'react-admin';
 import authProvider from './authProvider';
 import Dashboard from './Dashboard';
-import { BorneList, BorneEdit} from './bornes';
+import { BorneList, BorneEdit, BorneCreate} from './bornes';
 
 const fetchJson = (url, options = {}) => {
     if (!options.headers) {
@@ -20,7 +20,7 @@ const dataProvider = jsonServerProvider('http://192.168.1.32:3000/api/v1',fetchJ
 
 const App = () => (
     <Admin dashboard={Dashboard} authProvider={authProvider} dataProvider={dataProvider}>
-    <Resource name="borne" list={BorneList} edit={BorneEdit} />
+    <Resource name="borne" list={BorneList} edit={BorneEdit} create={BorneCreate} />
     </Admin>
 )
 

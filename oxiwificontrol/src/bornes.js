@@ -1,5 +1,5 @@
 import * as React from "react";
-import { List, Edit, TabbedForm,FormTab,TextInput, Datagrid, TextField, EditButton } from 'react-admin';
+import { List, Edit, Create, TabbedForm,FormTab,TextInput, Datagrid, TextField, EditButton } from 'react-admin';
 
 export const BorneList = props => (
     <List {...props}>
@@ -36,7 +36,35 @@ export const BorneEdit = props => (
         label="resources.bornes.tabs.details" 
         >
         <TextInput source="device" />
-        <TextInput source="Description" />
+        <TextInput source="adresse" />
+        <TextInput source="groupe" />
+        <TextInput source="modele" />
+        <TextInput source="password" />
+        <TextInput source="username" />
+        <TextInput source="password" />
+        <TextInput source="enablepassword" />
+        <TextInput source="interface" />
+        <TextInput source="etat" />
+        <TextInput source="lastrefresh" />
+        <TextInput source="utilisateurs" />
+      </FormTab>
+    </TabbedForm>
+  </Edit>
+);
+
+export const BorneCreate = props => (
+    <Create {...props} >
+    <TabbedForm>
+      <FormTab
+          label="resources.products.tabs.image"
+      >
+      <TextInput source="nom" />
+      <TextInput source="description" />
+      </FormTab>
+        <FormTab
+        label="resources.bornes.tabs.details"
+        >
+        <TextInput source="device" />
         <TextInput source="adresse" />
         <TextInput source="groupe" />
         <TextInput source="modele" />
@@ -51,5 +79,5 @@ export const BorneEdit = props => (
         <TextInput source="utilisateurs" />
       </FormTab>
     </TabbedForm>
-  </Edit>
+  </Create>
 );

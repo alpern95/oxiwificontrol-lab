@@ -22,7 +22,6 @@ const authProvider = {
                 //localStorage.setItem('permissions', decodedToken.permissions);
             });
 
-
     },
     logout: () => {
         localStorage.removeItem('username');

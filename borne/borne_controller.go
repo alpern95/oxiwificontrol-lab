@@ -30,8 +30,8 @@ func (controller BorneController) AddRouters() *restful.WebService {
 	//ws.Route(ws.PUT("/{borneId}").Filter(auth.BearerAuth).To(updateBorne))
 	ws.Route(ws.PUT("/{borneId}").To(updateBorne))
     
-	//ws.Route(ws.DELETE("/{borneId}").Filter(auth.BearerAuth).To(deleteBorne))
-	ws.Route(ws.DELETE("/{borneId}").To(deleteBorne))
+	ws.Route(ws.DELETE("/{borneId}").Filter(auth.BearerAuth).To(deleteBorne))
+	//ws.Route(ws.DELETE("/{borneId}").To(deleteBorne))
 
     //log.Printf("BorneId: %s", ws)
 	return ws
