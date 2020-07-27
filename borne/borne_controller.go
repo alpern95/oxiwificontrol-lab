@@ -27,11 +27,11 @@ func (controller BorneController) AddRouters() *restful.WebService {
 	
 	//ws.Route(ws.GET("/{utilisateur}").Filter(auth.BearerAuth).To(getBorneuser))
 
-	//ws.Route(ws.PUT("/{borneId}").Filter(auth.BearerAuth).To(updateBorne))
-	ws.Route(ws.PUT("/{borneId}").To(updateBorne))
+	ws.Route(ws.PUT("/{borneId}").Filter(auth.BearerAuth).To(updateBorne))
+	//ws.Route(ws.PUT("/{borneId}").To(updateBorne))
     
-	ws.Route(ws.DELETE("/{borneId}").Filter(auth.BearerAuth).To(deleteBorne))
-	//ws.Route(ws.DELETE("/{borneId}").To(deleteBorne))
+	//ws.Route(ws.DELETE("/{borneId}").Filter(auth.BearerAuth).To(deleteBorne))
+	ws.Route(ws.DELETE("/{borneId}").To(deleteBorne))
 
     //log.Printf("BorneId: %s", ws)
 	return ws
@@ -75,7 +75,7 @@ func listBornes(req *restful.Request, resp *restful.Response) {
     //log.Printf("talaborne: %s", totalBorne)
     resp.AddHeader("X-TOTAL-COUNT", strconv.Itoa(totalBorne) )
     //resp.AddHeader("Access-Control-Allow-Origin","http://192.168.1.32:3001")
-    //resp.AddHeader("Access-Control-Allow-Origin","http://192.168.1.32:3001")
+    resp.AddHeader("Access-Control-Allow-Origin","http://192.168.1.32:3001")
 	resp.WriteEntity(allBornes)
 }
 
