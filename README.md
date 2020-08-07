@@ -3,11 +3,12 @@ Un outil permettant la gestion de borne wifi dans les aglomérations pour les bi
 
 Les bornes wifi peuvent être éteintes, allumées à la demande par l'utilisateur responsable.
 
-Cette outil posséde: 
-  -un backend écrit en go et accessible par une restfull API.
+Cette outil posséde:
+ 
+* un backend écrit en go et accessible par une restfull API.
   Ce backend gére une base mongdb
-  Ce backend ispose d'un outil de connexion au switch où sont connectés les borne.
+  Ce backend dispose d'un outil de connexion au switch où sont connectés les borne.
 
-  -un frontend est développé avec  react-admin 
+* un frontend qui est développé avec  react-admin 
 
   
