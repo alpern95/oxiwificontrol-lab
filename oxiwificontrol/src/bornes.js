@@ -1,48 +1,39 @@
 import * as React from "react";
-import { List, Edit, Create, TabbedForm,FormTab,TextInput, Datagrid, TextField, EditButton } from 'react-admin';
+import { List, Edit, Create, TabbedForm,FormTab,TextInput, Datagrid, TextField, EditButton,PasswordInput } from 'react-admin';
 
 export const BorneList = props => (
-    <List {...props}>
+    <List {...props} >
         <Datagrid rowClick="edit">
-            <TextField source="nom" />
-            <TextField source="description" /> 
-            <TextField source="device" />
-            <TextField source="adresse" />
-            <TextField source="groupe" />
-            <TextField source="modele" />
-            <TextField source="username" />
-            <TextField source="password" />
-            <TextField source="enablepassword" />
-            <TextField source="interface" />
-            <TextField source="etat" />
-            <TextField source="lastrefresh" />
+            <TextField source="nom" sortable={false} />
+            <TextField source="description" sortable={false} /> 
+            <TextField source="groupe" sortable={false} />
+            <TextField source="etat" sortable={false} />
+            <TextField source="lastrefresh" sortable={false} />
             <EditButton />
         </Datagrid>
     </List>
 );
 
-
 export const BorneEdit = props => (
     <Edit {...props} >
     <TabbedForm>
       <FormTab
-          label="resources.products.tabs.image"
+          label="base"
       >
       <TextInput source="nom" />
       <TextInput source="description" />
       </FormTab>
     
         <FormTab 
-        label="resources.bornes.tabs.details" 
+        label="détail" 
         >
         <TextInput source="device" />
         <TextInput source="adresse" />
         <TextInput source="groupe" />
         <TextInput source="modele" />
-        <TextInput source="password" />
         <TextInput source="username" />
-        <TextInput source="password" />
-        <TextInput source="enablepassword" />
+        <PasswordInput source="password" />
+        <PasswordInput source="enablepassword" />
         <TextInput source="interface" />
         <TextInput source="etat" />
         <TextInput source="lastrefresh" />
@@ -56,23 +47,21 @@ export const BorneCreate = props => (
     <Create {...props} >
     <TabbedForm>
       <FormTab
-          label="resources.products.tabs.image"
+          label="base"
       >
       <TextInput source="nom" />
       <TextInput source="description" />
       </FormTab>
         <FormTab
-        label="resources.bornes.tabs.details"
+        label="details"
         >
         <TextInput source="device" />
         <TextInput source="adresse" />
         <TextInput source="groupe" />
         <TextInput source="modele" />
-        <TextInput source="password" />
-        <TextInput source="modele" />
         <TextInput source="username" />
-        <TextInput source="password" />
-        <TextInput source="enablepassword" />
+        <PasswordInput source="password" />
+        <PasswordInput source="enablepassword" />
         <TextInput source="interface" />
         <TextInput source="etat" />
         <TextInput source="lastrefresh" />

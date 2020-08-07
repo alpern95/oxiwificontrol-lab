@@ -16,22 +16,25 @@ type BorneController struct {
 func (controller BorneController) AddRouters() *restful.WebService {
 	ws := new(restful.WebService)
 	ws.Path("/api/v1/borne").Consumes(restful.MIME_JSON).Produces(restful.MIME_JSON)
-	//ws.Route(ws.POST("/").Filter(auth.BearerAuth).To(createBorne))
-    ws.Route(ws.POST("/").To(createBorne))
+	ws.Route(ws.POST("/").Filter(auth.BearerAuth).To(createBorne))
+        //ws.Route(ws.POST("/").To(createBorne))
 
-	//ws.Route(ws.GET("/").Filter(auth.BearerAuth).To(listBornes))
-	ws.Route(ws.GET("/").To(listBornes))
+	ws.Route(ws.GET("/").Filter(auth.BearerAuth).To(listBornes))
+	//ws.Route(ws.GET("/").To(listBornes))
 
-	//ws.Route(ws.GET("/{borneId}").Filter(auth.BearerAuth).To(getBorne))
-	ws.Route(ws.GET("/{borneId}").To(getBorne))
+	ws.Route(ws.GET("/{borneId}").Filter(auth.BearerAuth).To(getBorne))
+	//ws.Route(ws.GET("/{borneId}").To(getBorne))
+
+	// Creation nouvelle route 30/07/2020
+	ws.Route(ws.GET("/groupe/{groupe}").Filter(auth.BearerAuth).To(getBorneGroupe))
 	
 	//ws.Route(ws.GET("/{utilisateur}").Filter(auth.BearerAuth).To(getBorneuser))
 
 	ws.Route(ws.PUT("/{borneId}").Filter(auth.BearerAuth).To(updateBorne))
 	//ws.Route(ws.PUT("/{borneId}").To(updateBorne))
     
-	//ws.Route(ws.DELETE("/{borneId}").Filter(auth.BearerAuth).To(deleteBorne))
-	ws.Route(ws.DELETE("/{borneId}").To(deleteBorne))
+	ws.Route(ws.DELETE("/{borneId}").Filter(auth.BearerAuth).To(deleteBorne))
+	//ws.Route(ws.DELETE("/{borneId}").To(deleteBorne))
 
     //log.Printf("BorneId: %s", ws)
 	return ws
@@ -74,8 +77,10 @@ func listBornes(req *restful.Request, resp *restful.Response) {
     totalBorne := len(allBornes)
     //log.Printf("talaborne: %s", totalBorne)
     resp.AddHeader("X-TOTAL-COUNT", strconv.Itoa(totalBorne) )
+    resp.AddHeader("Content-Range", strconv.Itoa(totalBorne) )
+    resp.AddHeader("Access-Control-Expose-Headers", "X-Total-Count" ) 
+    ////resp.AddHeader("Access-Control-Allow-Origin","http://192.168.112.10:3001")
     //resp.AddHeader("Access-Control-Allow-Origin","http://192.168.1.32:3001")
-    resp.AddHeader("Access-Control-Allow-Origin","http://192.168.1.32:3001")
 	resp.WriteEntity(allBornes)
 }
 
@@ -100,22 +105,11 @@ func getBorne(req *restful.Request, resp *restful.Response) {
 	resp.WriteEntity(borne)
 }
 
-func getBorneuser(req *restful.Request, resp *restful.Response) {
+func getBorneGroupe(req *restful.Request, resp *restful.Response) {
        //utilisateur := req.PathParameter("utilisateur")
         borne := Borne{}
         session := db.NewDBSession()
         defer session.Close()
-       //c := session.DB("").C("borne")
-       //err := c.Find(bson.M{"Utilisateurs": "utilisateurs[utilisateur]" }).All
-       //if err != nil {
-         //      if err == mgo.ErrNotFound {
-         //              resp.WriteError(404, err)
-         //      } else {
-         //              resp.WriteError(500, err)
-         //      }
-         //      return
-       //}
-
         resp.WriteEntity(borne)
 }
 

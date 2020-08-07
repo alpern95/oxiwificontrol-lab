@@ -2,7 +2,7 @@
 
 const authProvider = {
     login: ({ username, password }) =>  {
-        const request = new Request('http://192.168.1.32:3000/api/v1/user/login', {
+        const request = new Request('http://192.168.112.10:3000/api/v1/user/login', {
             method: 'POST',
             body: JSON.stringify({ username, password }),
             headers: new Headers({ 'Content-Type': 'application/json' }),
@@ -14,23 +14,31 @@ const authProvider = {
                 }
                 return response.json();
             })
-            .then(({ token }) => {
-                //const decodedToken = decodeJwt(token);
+            .then(({ token,role}) => {
                 localStorage.setItem('token', token);
                 localStorage.setItem('username', username);
+                localStorage.setItem('permissions', role);
                 return Promise.resolve();
-                //localStorage.setItem('permissions', decodedToken.permissions);
-            });
-
+            })
     },
+
     logout: () => {
         localStorage.removeItem('username');
+        localStorage.removeItem('token');
+        localStorage.removeItem('permissions');
         return Promise.resolve();
     },
-    checkError: () => Promise.resolve(),
-    checkAuth: () =>
-        localStorage.getItem('username') ? Promise.resolve() : Promise.reject(),
-    getPermissions: () => Promise.reject('Unknown method'),
-};
 
+    checkError: () => Promise.resolve(),
+
+    checkAuth: () => {
+        //localStorage.getItem('username') ? Promise.resolve() : Promise.reject(),
+        return localStorage.getItem('token') ? Promise.resolve() : Promise.reject();
+    },
+
+    getPermissions: () => {
+        const role = localStorage.getItem('permissions');
+        return role ? Promise.resolve(role) : Promise.reject();
+    },
+};
 export default authProvider

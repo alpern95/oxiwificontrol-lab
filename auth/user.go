@@ -6,6 +6,6 @@ package auth
     Username string `json:"username"  bson:"username"`
     Password string `json:"password"  bson:"password"`
     Email    string `json:"email"     bson:"email"`
-    Groupe   string `json:"groupe"    bson:"groupe"`
+    Role     string `json:"role"      bson:"role"`
     Token    string `json:"token"     bson:"token"`
   }

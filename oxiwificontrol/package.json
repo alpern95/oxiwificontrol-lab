@@ -7,7 +7,6 @@
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "material-ui": "^0.20.2",
-    "ra-data-hasura": "^0.0.8",
     "ra-data-simple-rest": "^3.7.1",
     "ra-language-french": "^3.6.2",
     "react": "^16.13.1",
