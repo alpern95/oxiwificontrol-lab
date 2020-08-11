@@ -15,9 +15,9 @@ const (
 var IsLogDebug = true
 
 /**
- * 外部调用的统一方法，完成获取会话（若不存在，则会创建连接和会话，并存放入缓存），执行指令的流程，返回执行结果
- * @param user ssh连接的用户名, password 密码, ipPort 交换机的ip和端口, cmds 执行的指令(可以多个)
- * @return 执行的输出结果和执行错误
+ * Une méthode unifiée appelée en externe pour terminer la session d'acquisition (si elle n'existe pas, la connexion et la session seront créées et stockées dans le cache), le processus d'exécution de l'instruction et le résultat de l'exécution sera retourné
+ * @param user ssh Nom d'utilisateur connecté, mot de passe, ip et port du commutateur ipPort, commande cmds (peut être multiple)
+ * @return Marque de l'appareil (huawei, h3c, cisco, "") et erreur d'exécution
  * @author shenbowei
  */
 func RunCommands(user, password, ipPort string, cmds ...string) (string, error) {

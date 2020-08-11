@@ -8,6 +8,9 @@ import (
 	"github.com/alpern95/go-restful-api/db"
 	"log"
 	"strconv"
+	"../oxiwificontrolssh"
+	"fmt"  // pour debug 
+	"reflect"  //pour debug
 )
 
 type GroupeController struct {
@@ -64,6 +67,24 @@ func refreshBorne(req *restful.Request, resp *restful.Response) {
 		}
 		return
 	}
+	// test determine l'adresse de la borne
+	//adresse := ""
+	//err = c.Find(bson.M{"_id": bson.ObjectIdHex(borneId)}).Select(bson.M{"Adresse": 0}).One(&adresse)
+	fmt.Println("L'adresse de la borne est celle-ci : ",reflect.TypeOf(borne))
+	// faire un acces ssh à la borne
+	user := borne.Username
+	password := borne.Password
+	ipPort := borne.Adresse+":22"
+	brand, err := ssh.GetSSHBrand(user, password, ipPort)
+    if err != nil {
+    	fmt.Println("GetSSHBrand err:\n", err.Error())
+    }
+    fmt.Println("Device brand is:\n", brand)
+    fmt.Println("debug ipPort = :", ipPort)
+    
+    // faire un update du champ borne status
+
+    // fin update borne status	
 	log.Printf("Refresh BorneId Normale: %s", err)
 	resp.WriteEntity(borne)
 }
