@@ -7,7 +7,7 @@ Cette outil possède:
  
 * un backend écrit en go et accessible par une restfull API.
   Ce backend gére une base mongdb
-  Ce backend dispose d'un outil de connexion au switch où sont connectés les borne.
+  Ce backend dispose d'un outil de connexion au switch où sont connectés les bornes.
 
 * un frontend qui est développé avec  react-admin 
 
