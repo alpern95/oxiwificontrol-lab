@@ -10,6 +10,7 @@ const (
 	HUAWEI = "huawei"
 	H3C    = "h3c"
 	CISCO  = "cisco"
+	LINUX  ="Linux"
 )
 
 var IsLogDebug = true

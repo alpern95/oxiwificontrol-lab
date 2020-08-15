@@ -39,7 +39,7 @@ func main() {
 	wsContainer.Filter(cors.Filter)
     wsContainer.Filter(wsContainer.OPTIONSFilter)
     
-	host := "192.168.112.10:3000"
+	host := "192.168.1.32:3000"
 	log.Printf("listening on: %s", host)
 	server := &http.Server{Addr: host, Handler: wsContainer}
 	log.Fatal(server.ListenAndServe())

@@ -72,6 +72,7 @@ func refreshBorne(req *restful.Request, resp *restful.Response) {
 	//err = c.Find(bson.M{"_id": bson.ObjectIdHex(borneId)}).Select(bson.M{"Adresse": 0}).One(&adresse)
 	fmt.Println("L'adresse de la borne est celle-ci : ",reflect.TypeOf(borne))
 	// faire un acces ssh à la borne
+	cmds := make([]string, 0)
 	user := borne.Username
 	password := borne.Password
 	ipPort := borne.Adresse+":22"
@@ -81,7 +82,14 @@ func refreshBorne(req *restful.Request, resp *restful.Response) {
     }
     fmt.Println("Device brand is:\n", brand)
     fmt.Println("debug ipPort = :", ipPort)
-    
+
+    //run the cmds in the switch, and get the execution results
+    cmds = append(cmds, "uptime")     
+    result, err := ssh.RunCommands(user, password, ipPort, cmds...)
+    if err != nil {
+    	fmt.Println("RunCommand err:\n", err.Error())
+    }
+    fmt.Println("uptime result is = : ", result)
     // faire un update du champ borne status
 
     // fin update borne status	

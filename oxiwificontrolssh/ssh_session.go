@@ -227,7 +227,7 @@ func (this *SSHSession) GetSSHBrand() string {
 		return this.brand
 	}
 	//显示版本后需要多一组空格，避免版本信息过多需要分页，导致分页指令第一个字符失效的问题
-	this.WriteChannel("dis version", "     ", "show version", "     ")
+	this.WriteChannel("dis version", "     ", "show version","uname -a", "     ")
 	result := this.ReadChannelTiming(time.Second)
 	result = strings.ToLower(result)
 	if strings.Contains(result, HUAWEI) {
@@ -239,6 +239,9 @@ func (this *SSHSession) GetSSHBrand() string {
 	} else if strings.Contains(result, CISCO) {
 		LogDebug("The switch brand is <cisco>.")
 		this.brand = CISCO
+	} else if strings.Contains(result, LINUX) {
+		LogDebug("The switch brand is <linux>.")
+		this.brand = LINUX	
 	}
 	return this.brand
 }
