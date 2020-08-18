@@ -11,10 +11,12 @@ import (
 	"../oxiwificontrolssh"
 	"fmt"  // pour debug 
 	"reflect"  //pour debug
+	"time"
 )
 
 type GroupeController struct {
 }
+
 
 func (controller GroupeController) AddRouters() *restful.WebService {
 	ws := new(restful.WebService)
@@ -68,7 +70,6 @@ func refreshBorne(req *restful.Request, resp *restful.Response) {
 		return
 	}
 	// test determine l'adresse de la borne
-	//adresse := ""
 	//err = c.Find(bson.M{"_id": bson.ObjectIdHex(borneId)}).Select(bson.M{"Adresse": 0}).One(&adresse)
 	fmt.Println("L'adresse de la borne est celle-ci : ",reflect.TypeOf(borne))
 	// faire un acces ssh à la borne
@@ -80,7 +81,7 @@ func refreshBorne(req *restful.Request, resp *restful.Response) {
     if err != nil {
     	fmt.Println("GetSSHBrand err:\n", err.Error())
     }
-    fmt.Println("Device brand is:\n", brand)
+    fmt.Println("Device brand is: ", brand)
     fmt.Println("debug ipPort = :", ipPort)
 
     //run the cmds in the switch, and get the execution results
@@ -89,11 +90,34 @@ func refreshBorne(req *restful.Request, resp *restful.Response) {
     if err != nil {
     	fmt.Println("RunCommand err:\n", err.Error())
     }
-    fmt.Println("uptime result is = : ", result)
-    // faire un update du champ borne status
 
-    // fin update borne status	
-	log.Printf("Refresh BorneId Normale: %s", err)
+    fmt.Println("uptime result is = : ", result)
+
+   // 
+    maint := time.Now()
+    annee := maint.Format("06")
+    mois := maint.Format("01")
+    jour := maint.Format("02")
+    heure := maint.Format("15")
+    minute := maint.Format("04")
+    //annee,mois,jour,heure,minute := ""
+    updatetime := annee +":" +mois +":" +jour +" " +heure +":" +minute
+
+
+    // faire un update du champ borne status
+	log.Printf("Refresh BorneId Normale at : %s", updatetime)
+    borne.Lastrefresh = updatetime
+    //
+        err = c.Update(bson.M{"_id": borne.ID}, borne)
+        if err != nil {
+                if err == mgo.ErrNotFound {
+                        resp.WriteError(404, err)
+                } else {
+                        resp.WriteError(500, err)
+                }
+                return
+        }
+
 	resp.WriteEntity(borne)
 }
 
