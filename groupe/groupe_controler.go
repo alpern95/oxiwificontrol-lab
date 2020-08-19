@@ -10,7 +10,7 @@ import (
 	"strconv"
 	"../oxiwificontrolssh"
 	"fmt"  // pour debug 
-	"reflect"  //pour debug
+	//"reflect"  //pour debug
 	"time"
 )
 
@@ -69,9 +69,6 @@ func refreshBorne(req *restful.Request, resp *restful.Response) {
 		}
 		return
 	}
-	// test determine l'adresse de la borne
-	//err = c.Find(bson.M{"_id": bson.ObjectIdHex(borneId)}).Select(bson.M{"Adresse": 0}).One(&adresse)
-	fmt.Println("L'adresse de la borne est celle-ci : ",reflect.TypeOf(borne))
 	// faire un acces ssh à la borne
 	cmds := make([]string, 0)
 	user := borne.Username
@@ -82,7 +79,6 @@ func refreshBorne(req *restful.Request, resp *restful.Response) {
     	fmt.Println("GetSSHBrand err:\n", err.Error())
     }
     fmt.Println("Device brand is: ", brand)
-    fmt.Println("debug ipPort = :", ipPort)
 
     //run the cmds in the switch, and get the execution results
     cmds = append(cmds, "uptime")     
@@ -93,16 +89,10 @@ func refreshBorne(req *restful.Request, resp *restful.Response) {
 
     fmt.Println("uptime result is = : ", result)
 
-   // 
+   // Date Time
     maint := time.Now()
-    annee := maint.Format("06")
-    mois := maint.Format("01")
-    jour := maint.Format("02")
-    heure := maint.Format("15")
-    minute := maint.Format("04")
-    //annee,mois,jour,heure,minute := ""
-    updatetime := annee +":" +mois +":" +jour +" " +heure +":" +minute
-
+    update := maint.Format(time.RFC1123Z)
+    updatetime := update
 
     // faire un update du champ borne status
 	log.Printf("Refresh BorneId Normale at : %s", updatetime)
@@ -138,6 +128,49 @@ func stopBorne(req *restful.Request, resp *restful.Response) {
                 }
                 return
         }
+
+        ////
+        // faire un acces ssh à la borne
+        cmds := make([]string, 0)
+        user := borne.Username
+        password := borne.Password
+        ipPort := borne.Adresse+":22"
+        brand, err := ssh.GetSSHBrand(user, password, ipPort)
+        if err != nil {
+            fmt.Println("GetSSHBrand err:\n", err.Error())
+        }
+        fmt.Println("Device brand is: ", brand)
+
+        //run the cmds in the switch, and get the execution results
+        cmds = append(cmds, "uptime")
+        result, err := ssh.RunCommands(user, password, ipPort, cmds...)
+        if err != nil {
+            fmt.Println("RunCommand err:\n", err.Error())
+        }
+
+        fmt.Println("uptime result is = : ", result)
+
+        // Date Time
+        maint := time.Now()
+        update := maint.Format(time.RFC1123Z)
+        updatetime := update
+
+        // faire un update du champ borne status
+        log.Printf("Refresh BorneId Normale at : %s", updatetime)
+        borne.Lastrefresh = updatetime
+        borne.Etat = "DOWN"
+        //
+        err = c.Update(bson.M{"_id": borne.ID}, borne)
+        if err != nil {
+                if err == mgo.ErrNotFound {
+                        resp.WriteError(404, err)
+                } else {
+                        resp.WriteError(500, err)
+                }
+                return
+        }
+        ////
+
         log.Printf("Stop BorneId Normale: %s", err)
         resp.WriteEntity(borne)
 }
@@ -160,5 +193,48 @@ func startBorne(req *restful.Request, resp *restful.Response) {
                 return
         }
         log.Printf("Start BorneId Normale: %s", err)
+
+        ////
+        // faire un acces ssh à la borne
+        cmds := make([]string, 0)
+        user := borne.Username
+        password := borne.Password
+        ipPort := borne.Adresse+":22"
+        brand, err := ssh.GetSSHBrand(user, password, ipPort)
+        if err != nil {
+            fmt.Println("GetSSHBrand err:\n", err.Error())
+        }
+        fmt.Println("Device brand is: ", brand)
+
+        //run the cmds in the switch, and get the execution results
+        cmds = append(cmds, "uptime")
+        result, err := ssh.RunCommands(user, password, ipPort, cmds...)
+        if err != nil {
+            fmt.Println("RunCommand err:\n", err.Error())
+        }
+
+        fmt.Println("uptime result is = : ", result)
+
+        // Date Time
+        maint := time.Now()
+        update := maint.Format(time.RFC1123Z)
+        updatetime := update
+
+        // faire un update du champ borne status
+        log.Printf("Refresh BorneId Normale at : %s", updatetime)
+        borne.Lastrefresh = updatetime
+        borne.Etat = "UP"
+        //
+        err = c.Update(bson.M{"_id": borne.ID}, borne)
+        if err != nil {
+                if err == mgo.ErrNotFound {
+                        resp.WriteError(404, err)
+                } else {
+                        resp.WriteError(500, err)
+                }
+                return
+        }
+        ////
+
         resp.WriteEntity(borne)
 }
