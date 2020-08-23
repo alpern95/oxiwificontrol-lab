@@ -203,12 +203,15 @@ func (this *SSHSession) CheckSelf() bool {
 	}()
 
 	this.WriteChannel("\n")
-	result := this.ReadChannelExpect(2*time.Second, "#", ">", "]")
-	if strings.Contains(result, "#") ||
+	result := this.ReadChannelExpect(2*time.Second, "#", ">", "]", ":~$")
+	if strings.Contains(result, "#") || 
 		strings.Contains(result, ">") ||
-		strings.Contains(result, "]") {
+		strings.Contains(result, "]") ||
+		strings.Contains(result, ":~$") {
+		LogDebug("Prompt true",result)
 		return true
 	}
+	LogDebug("prompt false")
 	return false
 }
 
@@ -223,12 +226,15 @@ func (this *SSHSession) GetSSHBrand() string {
 			LogError("SSHSession GetSSHBrand err:%s", err)
 		}
 	}()
+	LogDebug("Detected Brand: ", this.brand)
 	if this.brand != "" {
+	    LogDebug("Brand is not null")
 		return this.brand
 	}
 	//显示版本后需要多一组空格，避免版本信息过多需要分页，导致分页指令第一个字符失效的问题
-	this.WriteChannel("dis version", "     ", "show version","uname -a", "     ")
+	this.WriteChannel("dis version", "show version","uname -a", "     ")
 	result := this.ReadChannelTiming(time.Second)
+	LogDebug("IMPORTANT string result unameetx.. ",strings.ToLower(result))
 	result = strings.ToLower(result)
 	if strings.Contains(result, HUAWEI) {
 		LogDebug("The switch brand is <huawei>.")
