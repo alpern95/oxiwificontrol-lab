@@ -17,25 +17,30 @@ import (
 type GroupeController struct {
 }
 
-
 func (controller GroupeController) AddRouters() *restful.WebService {
 	ws := new(restful.WebService)
 	ws.Path("/api/v1/groupe").Consumes(restful.MIME_JSON).Produces(restful.MIME_JSON)
-	ws.Route(ws.GET("/").Filter(auth.BearerAuth).To(listBornesGroupe))
-	//ws.Route(ws.GET("/{borneId}").Filter(auth.BearerAuth).To(getBorne))
+
+    //test deuxieme premier ok
+	//ws.Route(ws.GET("/").Filter(auth.BearerAuth).To(listBornesGroupe))
+	ws.Route(ws.GET("/{groupe}").Filter(auth.BearerAuth).To(listBornesGroupe))
+
 	ws.Route(ws.PUT("/refresh/{borneId}").Filter(auth.BearerAuth).To(refreshBorne))
-        ws.Route(ws.PUT("/stop/{borneId}").Filter(auth.BearerAuth).To(stopBorne))
-        ws.Route(ws.PUT("/start/{borneId}").Filter(auth.BearerAuth).To(startBorne))
+    ws.Route(ws.PUT("/stop/{borneId}").Filter(auth.BearerAuth).To(stopBorne))
+    ws.Route(ws.PUT("/start/{borneId}").Filter(auth.BearerAuth).To(startBorne))
     //log.Printf("BorneId: %s", ws)
 	return ws
 }
 
 func listBornesGroupe(req *restful.Request, resp *restful.Response) {
+    groupe := req.PathParameter("groupe")
+    log.Printf("Le groupe est :",groupe)
 	allBornes := make([]Borne, 0)
 	session := db.NewDBSession()
 	defer session.Close()
 	c := session.DB("").C("borne")
-	err := c.Find(bson.M{}).All(&allBornes)
+	//err := c.Find(bson.M{}).All(&allBornes)
+	err := c.Find(bson.M{"groupe": groupe}).All(&allBornes)
 	if err != nil {
 		resp.WriteError(500, err)
 		//log.Printf("BorneId: %s", err)
