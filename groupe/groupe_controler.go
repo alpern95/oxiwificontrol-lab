@@ -10,20 +10,31 @@ import (
 	"strconv"
 	"../oxiwificontrolssh"
 	"fmt"  // pour debug 
-	//"reflect"  //pour debug
+	"reflect"  //pour debug
 	"time"
+	"strings"
 )
 
 type GroupeController struct {
 }
+
+type User struct {
+    ID       bson.ObjectId `json:"id" bson:"_id"`
+    Username string `json:"username"  bson:"username"`
+    Password string `json:"password"  bson:"password"`
+    Email    string `json:"email"     bson:"email"`
+    Role     string `json:"role"      bson:"role"`
+    Token    string `json:"token"     bson:"token"`
+  }
+
 
 func (controller GroupeController) AddRouters() *restful.WebService {
 	ws := new(restful.WebService)
 	ws.Path("/api/v1/groupe").Consumes(restful.MIME_JSON).Produces(restful.MIME_JSON)
 
     //test deuxieme premier ok
-	//ws.Route(ws.GET("/").Filter(auth.BearerAuth).To(listBornesGroupe))
-	ws.Route(ws.GET("/{groupe}").Filter(auth.BearerAuth).To(listBornesGroupe))
+	ws.Route(ws.GET("/").Filter(auth.BearerAuth).To(listBornesGroupe))
+	//ws.Route(ws.GET("/{groupe}").Filter(auth.BearerAuth).To(listBornesGroupe))
 
 	ws.Route(ws.PUT("/refresh/{borneId}").Filter(auth.BearerAuth).To(refreshBorne))
     ws.Route(ws.PUT("/stop/{borneId}").Filter(auth.BearerAuth).To(stopBorne))
@@ -33,14 +44,46 @@ func (controller GroupeController) AddRouters() *restful.WebService {
 }
 
 func listBornesGroupe(req *restful.Request, resp *restful.Response) {
-    groupe := req.PathParameter("groupe")
-    log.Printf("Le groupe est :",groupe)
+
+    // Determiner le token
+    Bearer := req.Request.Header["Authorization"]
+    var token string
+    token = Bearer[0]
+    if strings.HasPrefix(token, "Bearer") {
+        token = strings.TrimPrefix(token, "Bearer ")
+    }else {
+    	return
+    }
+    log.Printf("le token est %s", token)
+
+    //Find the role with the token
+    session := db.NewDBSession()
+    defer session.Close()
+    c := session.DB("").C("user")
+    result := User{}
+    err := c.Find(bson.M{"token": token}).One(&result)
+    if err != nil {
+      if err == mgo.ErrNotFound {
+          log.Printf("not found token", err)
+          //return
+      }else {
+          log.Printf("erreur recherche token %s",err)
+      }
+    }
+    log.Printf("Le resultat de la recherche est : %s", result)
+    log.Printf("le type de result est: %s",reflect.TypeOf(result))
+    log.Print("le role est : ", result.Role)
+
+
+    // Lister les bornes du groupe == role
+     
 	allBornes := make([]Borne, 0)
-	session := db.NewDBSession()
+	session = db.NewDBSession()
 	defer session.Close()
-	c := session.DB("").C("borne")
-	//err := c.Find(bson.M{}).All(&allBornes)
-	err := c.Find(bson.M{"groupe": groupe}).All(&allBornes)
+	c = session.DB("").C("borne")
+	//err = c.Find(bson.M{}).All(&allBornes)
+	err = c.Find(bson.M{"groupe": result.Role }).All(&allBornes)
+	//err := c.Find(bson.M{"groupe": groupe}).All(&allBornes)]]
 	if err != nil {
 		resp.WriteError(500, err)
 		//log.Printf("BorneId: %s", err)

@@ -35,6 +35,5 @@ func BearerAuth(req *restful.Request, resp *restful.Response, chain *restful.Fil
 		resp.WriteErrorString(401, "Not Authorized")
 		return
 	}
-
 	chain.ProcessFilter(req, resp)
 }

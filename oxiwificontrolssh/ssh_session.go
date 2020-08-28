@@ -245,6 +245,9 @@ func (this *SSHSession) GetSSHBrand() string {
 	} else if strings.Contains(result, CISCO) {
 		LogDebug("The switch brand is <cisco>.")
 		this.brand = CISCO
+	} else if strings.Contains(result, EXOS)  {
+	    LogDebug("The switch brand is <exos>.")
+	    this.brand = EXOS	
 	} else if strings.Contains(result, LINUX) {
 		LogDebug("The switch brand is <linux>.")
 		this.brand = LINUX	

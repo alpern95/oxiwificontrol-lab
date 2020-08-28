@@ -11,7 +11,6 @@ import {
 import RefreshIcon from '@material-ui/icons/Refresh';
 
 const RefreshViewsButton = ({ selectedIds }) => {
-    //const basePath = "/api/v1/groupes/refresh"
     const refresh = useRefresh();
     const notify = useNotify();
     const unselectAll = useUnselectAll();

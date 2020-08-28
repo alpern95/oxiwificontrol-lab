@@ -11,6 +11,7 @@ const (
 	H3C    = "h3c"
 	CISCO  = "cisco"
 	LINUX  = "linux"
+	EXOS   = "exos"
 )
 
 var IsLogDebug = true

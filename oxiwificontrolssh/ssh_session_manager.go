@@ -10,6 +10,7 @@ var (
 	H3cNoPage    = "screen-length disable"
 	CiscoNoPage  = "terminal length 0"
 	LinuxNoPage = "clear"
+	ExosNoPage = "disable clipaging"
 )
 
 var sessionManager = NewSessionManager()
@@ -115,7 +116,7 @@ func (this *SessionManager) updateSession(user, password, ipPort, brand string) 
  * @author shenbowei
  */
 func (this *SessionManager) initSession(session *SSHSession, brand string) {
-	if brand != HUAWEI && brand != H3C && brand != CISCO && brand != LINUX {
+	if brand != HUAWEI && brand != H3C && brand != CISCO && brand != LINUX && brand != EXOS {
 		//如果传入的设备型号不匹配则自己获取
 		brand = session.GetSSHBrand()
 		LogError("Detection <brand> = :%s", brand)
@@ -133,6 +134,8 @@ func (this *SessionManager) initSession(session *SSHSession, brand string) {
 		break
 	case LINUX:
 	    session.WriteChannel(LinuxNoPage)
+	case EXOS:
+	    session.WriteChannel(ExosNoPage)
 	default:
 		return
 	}

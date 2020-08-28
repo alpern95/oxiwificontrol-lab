@@ -23,7 +23,7 @@ const httpClient = (url, options = {}) => {
 };
 
 
-const dataProvider = simpleRestProvider('http://192.168.1.32:3000/api/v1', httpClient);
+const dataProvider = simpleRestProvider('http://192.168.112.10:3000/api/v1', httpClient);
 
 const App = () => (
     <Admin 

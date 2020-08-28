@@ -5,7 +5,8 @@ import { Fragment } from 'react';
 //import Button from '@material-ui/core/Button';
 import StopViewsButton from './StopViewsButton';
 import StartViewsButton from './StartViewsButton';
-import RefreshViewsButton from './RefreshViewsButton'
+import RefreshViewsButton from './RefreshViewsButton';
+//import { useQuery, Loading, Error } from 'react-admin';
 
 //Add custom action
 
@@ -19,7 +20,7 @@ const PostBulkActionButtons = props => (
 );
 
 //Visu liste par groupe
-export const GroupeList = (props) => (
+export const GroupeList = ({  ...props }) => (
     <List {...props} title="Liste des bornes de votre groupe" bulkActionButtons={<PostBulkActionButtons />}>
         <Datagrid >
             <TextField source="nom" sortable={false} />
