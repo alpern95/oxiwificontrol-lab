@@ -1,5 +1,5 @@
 import * as React from "react";
-import { List, Edit, Create, TextInput, Datagrid, TextField, EditButton,PasswordInput } from 'react-admin';
+import { List, Edit, Create, SimpleForm, TextInput, Datagrid, TextField, EditButton,PasswordInput } from 'react-admin';
 
 export const UserList = props => (
     <List {...props} >
@@ -16,18 +16,22 @@ export const UserList = props => (
 
 export const UserEdit = props => (
     <Edit {...props} >
-      <TextInput source="username" />
-      <PasswordInput source="password" />
-      <TextInput source="email" />
-      <TextInput source="role" />
+      <SimpleForm >
+        <TextInput source="username" />
+        <PasswordInput source="password" />
+        <TextInput source="email" />
+        <TextInput source="role" />
+        </SimpleForm>
     </Edit>
 );
 
 export const UserCreate = props => (
     <Create {...props} >
-      <TextInput source="username" />
-      <PasswordInput source="password" />
-      <TextInput source="email" />
-      <TextInput source="role" />
-  </Create>
+        <SimpleForm >
+        <TextInput source="username" />
+        <PasswordInput source="password" />
+        <TextInput source="email" />
+        <TextInput source="role" />
+        </SimpleForm>
+    </Create>
 );
