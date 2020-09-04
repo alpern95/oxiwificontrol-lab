@@ -6,7 +6,7 @@ import { fetchUtils } from 'react-admin';
 import authProvider from './authProvider';
 import Dashboard from './Dashboard';
 import { BorneList, BorneEdit, BorneCreate} from './bornes';
-import { UserList, UserCreate} from'./users';
+import { UserList, UserEdit, UserCreate} from'./users';
 import { GroupeList} from './groupes';
 
 //import MyLayout from './MyLayout';
@@ -47,6 +47,7 @@ const App = () => (
     ? <Resource
             name="users"
             list={UserList}
+            edit={UserEdit}
             create={UserCreate}
     />
        : null,

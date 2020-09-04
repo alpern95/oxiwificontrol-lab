@@ -5,7 +5,6 @@ import {
     useUpdateMany,
     useRefresh,
     useNotify,
-    Confirm,
     useUnselectAll,
 } from 'react-admin';
 import RefreshIcon from '@material-ui/icons/Refresh';
