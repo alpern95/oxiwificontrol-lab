@@ -4,7 +4,7 @@ import (
 	"log"
 	"strings"
 	"time"
-
+    "strconv"
 	"github.com/emicklei/go-restful"
 	"github.com/globalsign/mgo"
 	"github.com/globalsign/mgo/bson"
@@ -12,6 +12,7 @@ import (
 	//"../db"
 	"github.com/alpern95/go-restful-api/db"
 	"golang.org/x/crypto/bcrypt"
+	//"auth"
 )
 
 type UserController struct {
@@ -19,10 +20,11 @@ type UserController struct {
 
 func (controller UserController) AddRouters() *restful.WebService {
 	ws := new(restful.WebService)
-	ws.Path("/api/v1/user").Consumes(restful.MIME_JSON).Produces(restful.MIME_JSON)
-	ws.Route(ws.POST("/login").To(login))
-	ws.Route(ws.POST("/register").To(register))
-
+	ws.Path("/api/v1/").Consumes(restful.MIME_JSON).Produces(restful.MIME_JSON)
+	ws.Route(ws.POST("user/login").To(login))
+	ws.Route(ws.POST("user/register").To(register))
+    //ws.Route(ws.GET("user/users").To(listUsers))
+      ws.Route(ws.GET("users/").To(listUsers))
 	return ws
 }
 
@@ -119,9 +121,6 @@ func hashAndSalt(pwd string) (string, error) {
 		log.Printf("ERROR error hashing password: %v\n", err)
 		return pwd, err
 	}
-
-	// GenerateFromPassword returns a byte slice so we need to
-	// convert the bytes to a string and return it
 	return string(hash), nil
 }
 
@@ -133,4 +132,22 @@ func comparePasswords(hashedPwd string, plainPwd string) bool {
 	byteHash := []byte(hashedPwd)
 	err := bcrypt.CompareHashAndPassword(byteHash, []byte(plainPwd))
 	return err == nil
+}
+
+func listUsers(req *restful.Request, resp *restful.Response) {
+        allUsers := make([]User, 0)
+        session := db.NewDBSession()
+        defer session.Close()
+        c := session.DB("").C("user")
+        err := c.Find(bson.M{}).All(&allUsers)
+        if err != nil {
+                resp.WriteError(500, err)
+                //log.Printf("BorneId: %s", err)
+                return
+        }
+    totalUser := len(allUsers)
+    resp.AddHeader("X-TOTAL-COUNT", strconv.Itoa(totalUser) )
+    resp.AddHeader("Content-Range", strconv.Itoa(totalUser) )
+    resp.AddHeader("Access-Control-Expose-Headers", "X-Total-Count" )
+    resp.WriteEntity(allUsers)
 }

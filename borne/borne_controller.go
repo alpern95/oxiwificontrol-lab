@@ -17,7 +17,7 @@ func (controller BorneController) AddRouters() *restful.WebService {
 	ws := new(restful.WebService)
 	ws.Path("/api/v1/borne").Consumes(restful.MIME_JSON).Produces(restful.MIME_JSON)
 	ws.Route(ws.POST("/").Filter(auth.BearerAuth).To(createBorne))
-        //ws.Route(ws.POST("/").To(createBorne))
+    //ws.Route(ws.POST("/").To(createBorne))
 
 	ws.Route(ws.GET("/").Filter(auth.BearerAuth).To(listBornes))
 	//ws.Route(ws.GET("/").To(listBornes))
