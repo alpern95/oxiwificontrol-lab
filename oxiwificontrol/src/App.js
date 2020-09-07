@@ -9,9 +9,18 @@ import { BorneList, BorneEdit, BorneCreate} from './bornes';
 import { UserList, UserEdit, UserCreate} from'./users';
 import { GroupeList} from './groupes';
 
+//require('dotenv').config()
+//const dotenv = require('dotenv');
+//dotenv.config();
+//const env = dotenv.config().parsed;
+
 //import MyLayout from './MyLayout';
 
 const MyLoginPage = () => <Login backgroundImage="/background.jpg" />;
+
+//const port = process.env.OXIWIFICONTROLPORT;
+//const addr = process.env.OXIWIFICONTROLADDR;
+//console.log(`Your addr:port is ${addr}`);
 
 const httpClient = (url, options = {}) => {
     if (!options.headers) {
@@ -25,8 +34,8 @@ const httpClient = (url, options = {}) => {
     return fetchUtils.fetchJson(url, options);
 };
 
-
-const dataProvider = simpleRestProvider('http://192.168.112.10:3000/api/v1', httpClient);
+const dataProvider = simpleRestProvider('http://192.168.112.10:8081/api/v1', httpClient);
+//const dataProviser = simpleRestProviser(OXIWIFICONTROLADDR,httpClient);
 
 const App = () => (
     <Admin loginPage={MyLoginPage} 

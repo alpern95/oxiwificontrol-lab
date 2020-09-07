@@ -12,6 +12,8 @@ import (
 	//"github.com/alpern95/go-restful-api/groupe"
 	"./groupe"
 	"github.com/alpern95/go-restful-api/db"
+	"github.com/joho/godotenv"
+	"os"
 )
 
 func main() {
@@ -39,8 +41,24 @@ func main() {
 	wsContainer.Filter(cors.Filter)
     wsContainer.Filter(wsContainer.OPTIONSFilter)
     
-	host := "192.168.112.10:3000"
-	log.Printf("listening on: %s", host)
-	server := &http.Server{Addr: host, Handler: wsContainer}
+	//host := "192.168.112.10:3000"
+	host := goDotEnvVariable("OXIWIFICONTROLADDR")
+	port := goDotEnvVariable("OXIWIFICONTROLPORT")
+	//log.Printf("listening on: %s", host+":"+port)
+	hostaddr := host+":"+port
+	log.Printf("listening on: %s", hostaddr)
+	server := &http.Server{Addr: hostaddr, Handler: wsContainer}
 	log.Fatal(server.ListenAndServe())
+}
+
+func goDotEnvVariable(key string) string {
+
+  // load .env file
+  err := godotenv.Load(".env")
+
+  if err != nil {
+    log.Fatalf("Error loading .env file")
+  }
+
+  return os.Getenv(key)
 }
