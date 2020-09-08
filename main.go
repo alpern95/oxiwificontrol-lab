@@ -14,11 +14,15 @@ import (
 	"github.com/alpern95/go-restful-api/db"
 	"github.com/joho/godotenv"
 	"os"
+	"os/user"
 )
 
 func main() {
 	log.SetFlags(log.Ldate | log.Ltime | log.Lshortfile)
 	db.InitDB()
+
+    //Add user path
+	//usr, err := user.Current()
 
 	wsContainer := restful.NewContainer()
 	wsContainer.Add(borne.BorneController{}.AddRouters())
@@ -54,7 +58,9 @@ func main() {
 func goDotEnvVariable(key string) string {
 
   // load .env file
-  err := godotenv.Load(".env")
+  usr, err := user.Current()
+  //err := godotenv.Load("/home/alain/go-restful-api/.env")
+  err =   godotenv.Load(usr.HomeDir+"/go-restful-api/.env")
 
   if err != nil {
     log.Fatalf("Error loading .env file")

@@ -15,6 +15,14 @@ import (
 	"strings"
 )
 
+const (
+        HUAWEI = "huawei"
+        H3C    = "h3c"
+        CISCO  = "cisco"
+        LINUX  = "linux"
+        EXOS   = "exos"
+)
+
 type GroupeController struct {
 }
 
@@ -120,6 +128,7 @@ func refreshBorne(req *restful.Request, resp *restful.Response) {
 	// faire un acces ssh à la borne
 	cmds := make([]string, 0)
 	user := borne.Username
+	port := borne.Interface
 	password := borne.Password
 	ipPort := borne.Adresse+":22"
 	brand, err := ssh.GetSSHBrand(user, password, ipPort)
@@ -128,14 +137,38 @@ func refreshBorne(req *restful.Request, resp *restful.Response) {
     }
     fmt.Println("Device brand is: ", brand)
 
-    //run the cmds in the switch, and get the execution results
-    cmds = append(cmds, "uptime")     
-    result, err := ssh.RunCommands(user, password, ipPort, cmds...)
-    if err != nil {
-    	fmt.Println("RunCommand err:\n", err.Error())
+    if brand != HUAWEI && brand != H3C && brand != CISCO && brand != LINUX && brand != EXOS {
+            //LogDebug("Detection  <brand> = ", brand)
     }
+    switch brand {
+    case HUAWEI:
+            //session.WriteChannel(HuaweiNoPage)
+            break
+    case H3C:
+            //session.WriteChannel(H3cNoPage)
+            break
+    case CISCO:
+            //session.WriteChannel(CiscoNoPage)
+            break
+    case LINUX:
+        //session.WriteChannel(LinuxNoPage)
+    case EXOS:
+        //run the cmds in the switch, and get the execution results
+        cmds = append(cmds, "sh port "+port+" information | include "+port)
+        result, err := ssh.RunCommands(user, password, ipPort, cmds...)
+        if err != nil {
+            fmt.Println("RunCommand err:\n", err.Error())
+        }else {
+        	fmt.Println("Le resultat de show port",result)
 
-    fmt.Println("uptime result is = : ", result)
+                if strings.Contains(result, "Em")  {
+                    fmt.Println("Prompt true",result)
+                    borne.Etat = "UP"
+                }else if strings.Contains(result,"Dm") {
+                	borne.Etat = "DOWN"
+                }
+        }
+    }
 
    // Date Time
     maint := time.Now()
@@ -176,8 +209,6 @@ func stopBorne(req *restful.Request, resp *restful.Response) {
                 }
                 return
         }
-
-        ////
         // faire un acces ssh à la borne
         cmds := make([]string, 0)
         user := borne.Username
