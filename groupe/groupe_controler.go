@@ -142,14 +142,11 @@ func refreshBorne(req *restful.Request, resp *restful.Response) {
     }
     switch brand {
     case HUAWEI:
-            //session.WriteChannel(HuaweiNoPage)
-            break
+        //break
     case H3C:
-            //session.WriteChannel(H3cNoPage)
-            break
+        //break
     case CISCO:
-            //session.WriteChannel(CiscoNoPage)
-            break
+        //break
     case LINUX:
         //session.WriteChannel(LinuxNoPage)
     case EXOS:
@@ -160,7 +157,6 @@ func refreshBorne(req *restful.Request, resp *restful.Response) {
             fmt.Println("RunCommand err:\n", err.Error())
         }else {
         	fmt.Println("Le resultat de show port",result)
-
                 if strings.Contains(result, "Em")  {
                     fmt.Println("Prompt true",result)
                     borne.Etat = "UP"
@@ -169,7 +165,6 @@ func refreshBorne(req *restful.Request, resp *restful.Response) {
                 }
         }
     }
-
    // Date Time
     maint := time.Now()
     update := maint.Format(time.RFC1123Z)
@@ -214,20 +209,37 @@ func stopBorne(req *restful.Request, resp *restful.Response) {
         user := borne.Username
         password := borne.Password
         ipPort := borne.Adresse+":22"
+        port := borne.Interface
         brand, err := ssh.GetSSHBrand(user, password, ipPort)
         if err != nil {
             fmt.Println("GetSSHBrand err:\n", err.Error())
         }
         fmt.Println("Device brand is: ", brand)
 
+        //ajout commande port enable
+    if brand != HUAWEI && brand != H3C && brand != CISCO && brand != LINUX && brand != EXOS {
+            //LogDebug("Detection  <brand> = ", brand)
+    }
+    switch brand {
+    case HUAWEI:
+        //break
+    case H3C:
+        //break
+    case CISCO:
+        //break
+    case LINUX:
+        //session.WriteChannel(LinuxNoPage)
+    case EXOS:
         //run the cmds in the switch, and get the execution results
-        cmds = append(cmds, "uptime")
+        cmds = append(cmds, "disable port "+port)
         result, err := ssh.RunCommands(user, password, ipPort, cmds...)
         if err != nil {
             fmt.Println("RunCommand err:\n", err.Error())
+            fmt.Println("result is :",result)
         }
+    }
 
-        fmt.Println("uptime result is = : ", result)
+        //
 
         // Date Time
         maint := time.Now()
@@ -279,6 +291,7 @@ func startBorne(req *restful.Request, resp *restful.Response) {
         user := borne.Username
         password := borne.Password
         ipPort := borne.Adresse+":22"
+        port := borne.Interface
         brand, err := ssh.GetSSHBrand(user, password, ipPort)
         if err != nil {
             fmt.Println("GetSSHBrand err:\n", err.Error())
@@ -287,13 +300,31 @@ func startBorne(req *restful.Request, resp *restful.Response) {
 
         //run the cmds in the switch, and get the execution results
         cmds = append(cmds, "uptime")
-        result, err := ssh.RunCommands(user, password, ipPort, cmds...)
-        if err != nil {
-            fmt.Println("RunCommand err:\n", err.Error())
+
+       // commande enable interface
+
+        if brand != HUAWEI && brand != H3C && brand != CISCO && brand != LINUX && brand != EXOS {
+                //LogDebug("Detection  <brand> = ", brand)
         }
-
-        fmt.Println("uptime result is = : ", result)
-
+        switch brand {
+        case HUAWEI:
+            //break
+        case H3C:
+            //break
+        case CISCO:
+            //break
+        case LINUX:
+            //session.WriteChannel(LinuxNoPage)
+        case EXOS:
+            //run the cmds in the switch, and get the execution results
+            cmds = append(cmds, "enable port "+port)
+            result, err := ssh.RunCommands(user, password, ipPort, cmds...)
+            if err != nil {
+                fmt.Println("RunCommand err:\n", err.Error())
+                fmt.Println("Result est : ",result)
+            }
+        }
+        //
         // Date Time
         maint := time.Now()
         update := maint.Format(time.RFC1123Z)
