@@ -1,7 +1,10 @@
-# oxiwificontrol
+Oxiwificontrol
+==============
+[20[![Build Status](https://travis-ci.org/emicklei/go-restful.png)](https://travis-ci.org/emicklei/go-restful)
+
 Un outil permettant la gestion de borne wifi dans les aglomérations pour les bibliothéque, Médiathéque
 
-Les bornes wifi peuvent être éteintes, allumées à la demande par l'utilisateur responsable.
+Les bornes wifi peuvent être éteintes, allumées à la demande par l'utilisateur responsable d'un groupe de bornes.
 
 Cette outil possède:
  
@@ -11,4 +14,5 @@ Cette outil possède:
 
 * un frontend qui est développé avec  react-admin 
 
+### Fonctionnalités
   
