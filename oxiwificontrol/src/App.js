@@ -25,7 +25,8 @@ const httpClient = (url, options = {}) => {
     return fetchUtils.fetchJson(url, options);
 };
 
-const dataProvider = simpleRestProvider('http://192.168.112.10:8081/api/v1', httpClient);
+//const dataProvider = simpleRestProvider('http://192.168.112.10:8081/api/v1', httpClient);
+const dataProvider = simpleRestProvider('https://192.168.112.10:4431/api/v1',httpClient);
 //const dataProviser = simpleRestProviser(REAC_APP_OXIWIFICONTROLADDR,httpClient);
 
 const App = () => (
