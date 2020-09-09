@@ -16,3 +16,10 @@ Cette outil possède:
 
 ### Fonctionnalités
   
+- Admin interface
+- Multi User
+- Users Role
+- Proxy ssl (zero conf)
+- Customisable accèss to diffreent Switch model (EXOS)
+- Restfull backend
+ 
