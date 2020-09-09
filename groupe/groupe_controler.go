@@ -133,7 +133,9 @@ func refreshBorne(req *restful.Request, resp *restful.Response) {
 	ipPort := borne.Adresse+":22"
 	brand, err := ssh.GetSSHBrand(user, password, ipPort)
     if err != nil {
-    	fmt.Println("GetSSHBrand err:\n", err.Error())
+        //fmt.Println("GetSSHBrand err:\n", err.Error())
+        resp.WriteError(500, err)
+        return
     }
     fmt.Println("Device brand is: ", brand)
 
@@ -151,7 +153,7 @@ func refreshBorne(req *restful.Request, resp *restful.Response) {
         //session.WriteChannel(LinuxNoPage)
     case EXOS:
         //run the cmds in the switch, and get the execution results
-        cmds = append(cmds, "sh port "+port+" information | include "+port)
+        cmds = append(cmds, "sh port "+port+" information ")
         result, err := ssh.RunCommands(user, password, ipPort, cmds...)
         if err != nil {
             fmt.Println("RunCommand err:\n", err.Error())
@@ -165,7 +167,7 @@ func refreshBorne(req *restful.Request, resp *restful.Response) {
                 }
         }
     }
-   // Date Time
+    // Date Time
     maint := time.Now()
     update := maint.Format(time.RFC1123Z)
     updatetime := update
@@ -212,7 +214,9 @@ func stopBorne(req *restful.Request, resp *restful.Response) {
         port := borne.Interface
         brand, err := ssh.GetSSHBrand(user, password, ipPort)
         if err != nil {
-            fmt.Println("GetSSHBrand err:\n", err.Error())
+            //fmt.Println("GetSSHBrand err:\n", err.Error())
+            resp.WriteError(500, err)
+            return
         }
         fmt.Println("Device brand is: ", brand)
 
@@ -238,7 +242,6 @@ func stopBorne(req *restful.Request, resp *restful.Response) {
             fmt.Println("result is :",result)
         }
     }
-
         //
 
         // Date Time
@@ -294,7 +297,9 @@ func startBorne(req *restful.Request, resp *restful.Response) {
         port := borne.Interface
         brand, err := ssh.GetSSHBrand(user, password, ipPort)
         if err != nil {
-            fmt.Println("GetSSHBrand err:\n", err.Error())
+            //fmt.Println("GetSSHBrand err:\n", err.Error())
+            resp.WriteError(500,err)
+            return
         }
         fmt.Println("Device brand is: ", brand)
 

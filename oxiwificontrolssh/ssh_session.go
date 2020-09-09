@@ -78,7 +78,8 @@ func (this *SSHSession) createConnection(user, password, ipPort string) error {
 		HostKeyCallback: func(hostname string, remote net.Addr, key ssh.PublicKey) error {
 			return nil
 		},
-		Timeout: 20 * time.Second,
+		Timeout: 8 * time.Second,
+		//Timeout: 20 * time.Second,
 		Config: ssh.Config{
 			Ciphers: []string{"aes128-ctr", "aes192-ctr", "aes256-ctr", "aes128-gcm@openssh.com",
 				"arcfour256", "arcfour128", "aes128-cbc", "aes256-cbc", "3des-cbc", "des-cbc",
