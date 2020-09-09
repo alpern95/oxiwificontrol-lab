@@ -1,6 +1,6 @@
 Oxiwificontrol
 ==============
-[20[![Build Status](https://travis-ci.org/emicklei/go-restful.png)](https://travis-ci.org/emicklei/go-restful)
+[![Build Status](https://https://github.com/alpern95/oxiwificontrol-lab/build-status.png)](https://github.com/alpern95/oxiwificontrol-lab)
 
 Un outil permettant la gestion de borne wifi dans les aglomérations pour les bibliothéque, Médiathéque
 
