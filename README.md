@@ -16,10 +16,10 @@ Cette outil possède:
 
 ### Fonctionnalités
   
-- Admin interface
-- Multi User
-- Users Role
-- Proxy ssl (zero conf)
-- Customisable accèss to diffreent Switch model (EXOS)
-- Restfull backend
+- Interface d'administration
+- Multi-utilsateurs
+- Rôle par utilisateur
+- Groupe de bornes 
+- Proxy ssl (zéro conf)
+- Accès personnalisables à différents modèles de Switch (EXOS)
  
