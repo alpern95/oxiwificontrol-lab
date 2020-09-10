@@ -46,12 +46,13 @@ func main() {
     wsContainer.Filter(wsContainer.OPTIONSFilter)
     
 	//host := "192.168.112.10:3000"
-	host := goDotEnvVariable("OXIWIFICONTROLADDR")
-	port := goDotEnvVariable("OXIWIFICONTROLPORT")
+	host := "127.0.0.1:8081"
+	//host := goDotEnvVariable("OXIWIFICONTROLADDR")
+	//port := goDotEnvVariable("OXIWIFICONTROLPORT")
 	//log.Printf("listening on: %s", host+":"+port)
-	hostaddr := host+":"+port
-	log.Printf("listening on: %s", hostaddr)
-	server := &http.Server{Addr: hostaddr, Handler: wsContainer}
+	//hostaddr := host+":"+port
+	log.Printf("listening on: %s", host)
+	server := &http.Server{Addr: host, Handler: wsContainer}
 	log.Fatal(server.ListenAndServe())
 }
 

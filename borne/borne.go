@@ -1,8 +1,6 @@
 package borne
 import (
 	"github.com/globalsign/mgo/bson"
-	//"time" 
-	//"github.com/fxtlabs/date"
 )
 
 type Borne struct {

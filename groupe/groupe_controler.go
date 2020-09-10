@@ -10,7 +10,7 @@ import (
 	"strconv"
 	"../oxiwificontrolssh"
 	"fmt"  // pour debug 
-	"reflect"  //pour debug
+	//"reflect"  //pour debug
 	"time"
 	"strings"
 )
@@ -40,9 +40,7 @@ func (controller GroupeController) AddRouters() *restful.WebService {
 	ws := new(restful.WebService)
 	ws.Path("/api/v1/groupe").Consumes(restful.MIME_JSON).Produces(restful.MIME_JSON)
 
-    //test deuxieme premier ok
 	ws.Route(ws.GET("/").Filter(auth.BearerAuth).To(listBornesGroupe))
-	//ws.Route(ws.GET("/{groupe}").Filter(auth.BearerAuth).To(listBornesGroupe))
 
 	ws.Route(ws.PUT("/refresh/{borneId}").Filter(auth.BearerAuth).To(refreshBorne))
     ws.Route(ws.PUT("/stop/{borneId}").Filter(auth.BearerAuth).To(stopBorne))
@@ -62,7 +60,6 @@ func listBornesGroupe(req *restful.Request, resp *restful.Response) {
     }else {
     	return
     }
-    log.Printf("le token est %s", token)
 
     //Find the role with the token
     session := db.NewDBSession()
@@ -78,13 +75,8 @@ func listBornesGroupe(req *restful.Request, resp *restful.Response) {
           log.Printf("erreur recherche token %s",err)
       }
     }
-    log.Printf("Le resultat de la recherche est : %s", result)
-    log.Printf("le type de result est: %s",reflect.TypeOf(result))
-    log.Print("le role est : ", result.Role)
-
 
     // Lister les bornes du groupe == role
-     
 	allBornes := make([]Borne, 0)
 	session = db.NewDBSession()
 	defer session.Close()
@@ -94,17 +86,12 @@ func listBornesGroupe(req *restful.Request, resp *restful.Response) {
 	//err := c.Find(bson.M{"groupe": groupe}).All(&allBornes)]]
 	if err != nil {
 		resp.WriteError(500, err)
-		//log.Printf("BorneId: %s", err)
 		return
 	}
-	//log.Printf("BorneId OK: %s", err)
     totalBorne := len(allBornes)
-    //log.Printf("talaborne: %s", totalBorne)
     resp.AddHeader("X-TOTAL-COUNT", strconv.Itoa(totalBorne) )
     resp.AddHeader("Content-Range", strconv.Itoa(totalBorne) )
     resp.AddHeader("Access-Control-Expose-Headers", "X-Total-Count" ) 
-    ////resp.AddHeader("Access-Control-Allow-Origin","http://192.168.112.10:3001")
-    //resp.AddHeader("Access-Control-Allow-Origin","http://192.168.1.32:3001")
 	resp.WriteEntity(allBornes)
 }
 
@@ -137,7 +124,7 @@ func refreshBorne(req *restful.Request, resp *restful.Response) {
         resp.WriteError(500, err)
         return
     }
-    fmt.Println("Device brand is: ", brand)
+    //fmt.Println("Device brand is: ", brand)
 
     if brand != HUAWEI && brand != H3C && brand != CISCO && brand != LINUX && brand != EXOS {
             //LogDebug("Detection  <brand> = ", brand)
@@ -336,7 +323,7 @@ func startBorne(req *restful.Request, resp *restful.Response) {
         updatetime := update
 
         // faire un update du champ borne status
-        log.Printf("Refresh BorneId Normale at : %s", updatetime)
+        //log.Printf("Refresh BorneId Normale at : %s", updatetime)
         borne.Lastrefresh = updatetime
         borne.Etat = "UP"
         //
