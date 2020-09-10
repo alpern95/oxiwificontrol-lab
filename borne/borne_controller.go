@@ -102,7 +102,7 @@ func getBorne(req *restful.Request, resp *restful.Response) {
 		}
 		return
 	}
-	log.Printf("BorneId Normale: %s", err)
+	//log.Printf("BorneId Normale: %s", err)
 	resp.WriteEntity(borne)
 }
 
