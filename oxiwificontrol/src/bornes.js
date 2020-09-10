@@ -30,14 +30,12 @@ export const BorneEdit = props => (
         <TextInput source="device" />
         <TextInput source="adresse" />
         <TextInput source="groupe" />
-        <TextInput source="modele" />
         <TextInput source="username" />
         <PasswordInput source="password" />
         <PasswordInput source="enablepassword" />
         <TextInput source="interface" />
         <TextInput source="etat" />
         <TextInput source="lastrefresh" />
-        <TextInput source="utilisateurs" />
       </FormTab>
     </TabbedForm>
   </Edit>
@@ -58,14 +56,12 @@ export const BorneCreate = props => (
         <TextInput source="device" />
         <TextInput source="adresse" />
         <TextInput source="groupe" />
-        <TextInput source="modele" />
         <TextInput source="username" />
         <PasswordInput source="password" />
         <PasswordInput source="enablepassword" />
         <TextInput source="interface" />
         <TextInput source="etat" />
         <TextInput source="lastrefresh" />
-        <TextInput source="utilisateurs" />
       </FormTab>
     </TabbedForm>
   </Create>
