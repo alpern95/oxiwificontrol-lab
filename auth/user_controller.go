@@ -13,7 +13,7 @@ import (
 	"github.com/alpern95/go-restful-api/db"
 	//"github.com/alpern95/oxiwificontrol-lab/db"
 	"golang.org/x/crypto/bcrypt"
-	//"auth"
+	"github.com/alpern95/oxiwificontrol-lab/auth"
 )
 
 type UserController struct {
@@ -23,13 +23,11 @@ func (controller UserController) AddRouters() *restful.WebService {
 	ws := new(restful.WebService)
 	ws.Path("/api/v1/").Consumes(restful.MIME_JSON).Produces(restful.MIME_JSON)
 	ws.Route(ws.POST("user/login").To(login))
-	//ws.Route(ws.POST("user/register").To(register))
 	  ws.Route(ws.POST("users").To(register))
-    //ws.Route(ws.GET("user/users").To(listUsers))
-      ws.Route(ws.GET("users/").To(listUsers))
-      //ajout d'une route delete
-      ws.Route(ws.DELETE("users/{userId}").To(deleteUser))
-      ws.Route(ws.GET("users/{UserId}").To(getUser))
+      //ws.Route(ws.GET("users/").To(listUsers))
+      ws.Route(ws.GET("users/").Filter(auth.BearerAuth).To(listUsers))
+      ws.Route(ws.DELETE("users/{userId}").Filter(auth.BearerAuth).To(deleteUser))
+      ws.Route(ws.GET("users/{UserId}").Filter(auth.BearerAuth).To(getUser))
 	return ws
 }
 
