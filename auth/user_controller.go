@@ -10,8 +10,8 @@ import (
 	"github.com/globalsign/mgo/bson"
 	"github.com/rs/xid"
 	//"../db"
-	"github.com/alpern95/go-restful-api/db"
-	//"github.com/alpern95/oxiwificontrol-lab/db"
+	//"github.com/alpern95/go-restful-api/db"
+	"github.com/alpern95/oxiwificontrol-lab/db"
 	"golang.org/x/crypto/bcrypt"
 	"github.com/alpern95/oxiwificontrol-lab/auth"
 )
