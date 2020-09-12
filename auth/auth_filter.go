@@ -6,7 +6,6 @@ import (
 	"github.com/emicklei/go-restful"
 	"github.com/globalsign/mgo/bson"
 	"github.com/alpern95/oxiwificontrol-lab/db"
-	//"../db"
 )
 
 // BearerAuth is used by all other endpoints to performan bearer token authorization
