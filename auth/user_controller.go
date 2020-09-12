@@ -24,9 +24,15 @@ func (controller UserController) AddRouters() *restful.WebService {
 	ws.Route(ws.POST("user/login").To(login))
 	  ws.Route(ws.POST("users").To(register))
       //ws.Route(ws.GET("users/").To(listUsers))
-      ws.Route(ws.GET("users/").Filter(auth.BearerAuth).To(listUsers))
-      ws.Route(ws.DELETE("users/{userId}").Filter(auth.BearerAuth).To(deleteUser))
-      ws.Route(ws.GET("users/{UserId}").Filter(auth.BearerAuth).To(getUser))
+
+      //ws.Route(ws.GET("users/").Filter(auth.BearerAuth).To(listUsers))
+      ws.Route(ws.GET("users/").To(listUsers))
+
+      //ws.Route(ws.DELETE("users/{userId}").Filter(auth.BearerAuth).To(deleteUser))
+      ws.Route(ws.DELETE("users/{userId}").To(deleteUser))
+      
+      //ws.Route(ws.GET("users/{UserId}").Filter(auth.BearerAuth).To(getUser))
+      ws.Route(ws.GET("users/{UserId}").To(getUser))
 	return ws
 }
 
