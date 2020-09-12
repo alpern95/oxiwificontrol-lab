@@ -12,7 +12,8 @@ import (
 
 	"log"
 	"strconv"
-	"../oxiwificontrolssh"
+	//"../oxiwificontrolssh"
+	"github.com/alpern95/oxiwificontrol-lab/oxiwificontrolssh"
 	"fmt"  // pour debug 
 	//"reflect"  //pour debug
 	"time"
