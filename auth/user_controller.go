@@ -12,7 +12,7 @@ import (
 	//laisser ci-bas
 	"github.com/alpern95/oxiwificontrol-lab/db"
 	"golang.org/x/crypto/bcrypt"
-	"github.com/alpern95/oxiwificontrol-lab/auth" //ajoute
+	//"github.com/alpern95/oxiwificontrol-lab/auth" //ajoute
 )
 
 type UserController struct {
@@ -24,7 +24,8 @@ func (controller UserController) AddRouters() *restful.WebService {
 	ws.Route(ws.POST("user/login").To(login))
 	  ws.Route(ws.POST("users").To(register))
       //ws.Route(ws.GET("users/").To(listUsers))
-      ws.Route(ws.GET("users/").Filter(auth.BearerAuth).To(listUsers))
+      //ws.Route(ws.GET("users/").Filter(auth.BearerAuth).To(listUsers))
+      ws.Route(ws.GET("users/").Filter(Bearer.Auth).To(listUsers))
       //ws.Route(ws.GET("users/").To(listUsers))
 
       //ws.Route(ws.DELETE("users/{userId}").Filter(auth.BearerAuth).To(deleteUser))
