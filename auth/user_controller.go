@@ -12,7 +12,7 @@ import (
 	//laisser ci-bas
 	"github.com/alpern95/oxiwificontrol-lab/db"
 	"golang.org/x/crypto/bcrypt"
-	//"github.com/alpern95/oxiwificontrol-lab/auth"
+	"github.com/alpern95/oxiwificontrol-lab/auth" //ajoute
 )
 
 type UserController struct {
