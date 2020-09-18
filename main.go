@@ -9,9 +9,7 @@ import (
     "github.com/alpern95/oxiwificontrol-lab/borne"
     "github.com/alpern95/oxiwificontrol-lab/auth"
 	"github.com/alpern95/oxiwificontrol-lab/db"
-	"github.com/joho/godotenv"
-	"os"
-	"os/user"
+	"github.com/coreos/go-systemd/daemon"
 )
 
 func main() {
@@ -44,25 +42,10 @@ func main() {
     
 	//host := "192.168.112.10:3000"
 	host := "127.0.0.1:8081"
-	//host := goDotEnvVariable("OXIWIFICONTROLADDR")
-	//port := goDotEnvVariable("OXIWIFICONTROLPORT")
 	//log.Printf("listening on: %s", host+":"+port)
 	//hostaddr := host+":"+port
 	log.Printf("listening on: %s", host)
+	daemon.SdNotify(false, daemon.SdNotifyReady)
 	server := &http.Server{Addr: host, Handler: wsContainer}
 	log.Fatal(server.ListenAndServe())
-}
-
-func goDotEnvVariable(key string) string {
-
-  // load .env file
-  usr, err := user.Current()
-  //err := godotenv.Load("/home/alain/go-restful-api/.env")
-  err =   godotenv.Load(usr.HomeDir+"/go-restful-api/.env")
-
-  if err != nil {
-    log.Fatalf("Error loading .env file")
-  }
-
-  return os.Getenv(key)
 }

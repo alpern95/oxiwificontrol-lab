@@ -5,10 +5,8 @@ export const UserList = props => (
     <List {...props} >
         <Datagrid >
             <TextField source="username" sortable={false} />
-            <TextField source="password" sortable={false} /> 
             <TextField source="email" sortable={false} />
             <TextField source="role" sortable={false} />
-            <TextField source="token" sortable={false} />
         </Datagrid>
     </List>
 );
