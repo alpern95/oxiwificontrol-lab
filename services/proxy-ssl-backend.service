@@ -1,0 +1,11 @@
+[Unit]
+Description=go-restful-api-service
+
+[Service]
+Type=notify
+ExecStart=/usr/bin/ssl-proxy -cert /root/tmp/certificate.pem -key /root/tmp/key.pem -from 0.0.0.0:4431 -to 127.0.0.1:8081
+WatchdogSec=30s
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target]]
