@@ -5,7 +5,7 @@ Description=go-restful-api-service
 Type=notify
 ExecStart=/usr/bin/go-restful-api
 #StandardOutput=/var/log/go-restful-api.log
-WatchdogSec=30s
+WatchdogSec=230s
 Restart=on-failure
 #TimeoutSec=infinity
 [Install]
