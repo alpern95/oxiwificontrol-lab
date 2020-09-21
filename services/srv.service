@@ -5,7 +5,7 @@ Description=go-server-oxiwificontrol
 Type=notify
 ExecStart=/usr/bin/srv -addr 127.0.0.1:3001 -dir '/home/oxiwificontrol/build/'
 #EnvironmentFile=/home/alain/go-restful-api/.env
-WatchdogSec=30s
+#WatchdogSec=30s
 Restart=on-failure
 
 [Install]
