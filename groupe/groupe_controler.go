@@ -109,10 +109,10 @@ func refreshBorne(req *restful.Request, resp *restful.Response) {
 	err := c.Find(bson.M{"_id": bson.ObjectIdHex(borneId)}).One(&borne)
 	if err != nil {
 		if err == mgo.ErrNotFound {
-		    log.Printf("BorneId Mongo: %s", err)
+		    //log.Printf("BorneId Mongo: %s", err)
 			resp.WriteError(404, err)
 		} else {
-		    log.Printf("BorneId: %s", err)
+		    //log.Printf("BorneId: %s", err)
 			resp.WriteError(500, err)
 		}
 		return
@@ -150,9 +150,9 @@ func refreshBorne(req *restful.Request, resp *restful.Response) {
         if err != nil {
             fmt.Println("RunCommand err:\n", err.Error())
         }else {
-        	fmt.Println("Le resultat de show port",result)
+        	//fmt.Println("Le resultat de show port",result)
                 if strings.Contains(result, "Em")  {
-                    fmt.Println("Prompt true",result)
+                    //fmt.Println("Prompt true",result)
                     borne.Etat = "UP"
                 }else if strings.Contains(result,"Dm") {
                 	borne.Etat = "DOWN"
@@ -165,7 +165,7 @@ func refreshBorne(req *restful.Request, resp *restful.Response) {
     updatetime := update
 
     // faire un update du champ borne status
-	log.Printf("Refresh BorneId Normale at : %s", updatetime)
+	//log.Printf("Refresh BorneId Normale at : %s", updatetime)
     borne.Lastrefresh = updatetime
     //
         err = c.Update(bson.M{"_id": borne.ID}, borne)
@@ -210,7 +210,7 @@ func stopBorne(req *restful.Request, resp *restful.Response) {
             resp.WriteError(500, err)
             return
         }
-        fmt.Println("Device brand is: ", brand)
+        //fmt.Println("Device brand is: ", brand)
 
         //ajout commande port enable
     if brand != HUAWEI && brand != H3C && brand != CISCO && brand != LINUX && brand != EXOS {
@@ -242,7 +242,7 @@ func stopBorne(req *restful.Request, resp *restful.Response) {
         updatetime := update
 
         // faire un update du champ borne status
-        log.Printf("Refresh BorneId Normale at : %s", updatetime)
+        //log.Printf("Refresh BorneId Normale at : %s", updatetime)
         borne.Lastrefresh = updatetime
         borne.Etat = "DOWN"
         //
@@ -257,7 +257,7 @@ func stopBorne(req *restful.Request, resp *restful.Response) {
         }
         ////
 
-        log.Printf("Stop BorneId Normale: %s", err)
+        //log.Printf("Stop BorneId Normale: %s", err)
         resp.WriteEntity(borne)
 }
 
@@ -278,7 +278,7 @@ func startBorne(req *restful.Request, resp *restful.Response) {
                 }
                 return
         }
-        log.Printf("Start BorneId Normale: %s", err)
+        //log.Printf("Start BorneId Normale: %s", err)
 
         ////
         // faire un acces ssh à la borne
@@ -293,7 +293,7 @@ func startBorne(req *restful.Request, resp *restful.Response) {
             resp.WriteError(500,err)
             return
         }
-        fmt.Println("Device brand is: ", brand)
+        //fmt.Println("Device brand is: ", brand)
 
         //run the cmds in the switch, and get the execution results
         cmds = append(cmds, "uptime")
