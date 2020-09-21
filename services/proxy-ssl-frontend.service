@@ -3,9 +3,9 @@ Description=go-restful-api-service
 
 [Service]
 Type=notify
-ExecStart=/usr/bin/ssl-proxy -cert /root/tmp/certificate.pem -key /root/tmp/key.pem -from 0.0.0.0:4430 -to 127.0.0.1:3001
+ExecStart=/usr/bin/ssl-proxy -cert /home/oxiwificontrol/cert/certificate.pem -key /home/oxiwificontrol/cert/key.pem -from 0.0.0.0:430 -to 127.0.0.1:3001
 WatchdogSec=30s
 Restart=on-failure
 
 [Install]
-WantedBy=multi-user.target]]
+WantedBy=multi-user.target

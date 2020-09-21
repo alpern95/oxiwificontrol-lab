@@ -4,10 +4,9 @@ Description=go-restful-api-service
 [Service]
 Type=notify
 ExecStart=/usr/bin/go-restful-api
-EnvironmentFile=/home/alain/go-restful-api/.env
 #StandardOutput=/var/log/go-restful-api.log
 WatchdogSec=30s
 Restart=on-failure
 #TimeoutSec=infinity
 [Install]
-WantedBy=multi-user.target]]
+WantedBy=multi-user.target
