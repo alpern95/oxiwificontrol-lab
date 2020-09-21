@@ -14,7 +14,8 @@ const (
 	EXOS   = "exos"
 )
 
-var IsLogDebug = true
+//var IsLogDebug = true
+var IsLogDebug = false
 
 /**
  * Une méthode unifiée appelée en externe pour terminer la session d'acquisition (si elle n'existe pas, la connexion et la session seront créées et stockées dans le cache), le processus d'exécution de l'instruction et le résultat de l'exécution sera retourné
