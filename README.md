@@ -24,7 +24,7 @@ Cette outil possède:
 - Accès personnalisables à différents modèles de Switch (EXOS)
 
 ### Architecture
-[!Architecture](https://github.com/alpern95/oxiwificontrol-lab/blob/master/archi.png)](https://github.com/alpern95/oxiwificontrol-lab)
+![Architecture](https://github.com/alpern95/oxiwificontrol-lab/blob/master/archi.png)
 
  
 ### En France la loi indique:
