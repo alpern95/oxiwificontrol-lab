@@ -35,4 +35,4 @@ Dans les classes des écoles primaires où la commune a installé du WiFi, il do
 
 ### Ref
 Nous utilisons le proxy ssl de [suyashkumar!](https://github.com/suyashkumar/ssl-proxy)
-nous utilisons le serveur http de [kevinpollet](https://github.com/kevinpollet/srv/)
+Nous utilisons le serveur http de [kevinpollet](https://github.com/kevinpollet/srv/)
