@@ -32,3 +32,6 @@ Cette outil possède:
 Dans les établissements accueillant les enfants de moins de 3 ans, la loi interdit le WiFi dans les espaces dédiés à l'accueil, au repos et aux activités.
 
 Dans les classes des écoles primaires où la commune a installé du WiFi, il doit être coupé lorsqu'il n'est pas utilisé pour les activités pédagogiques. Pour toute nouvelle installation, la commune doit en informer au préalable le conseil d'école.
+
+### Ref
+Nous utilisons le proxy ssl de [suyashkumar!](http://github.com/suyashkumar/ssl-proxy)
