@@ -22,6 +22,10 @@ Cette outil possède:
 - Groupe de bornes 
 - Proxy ssl (zéro conf)
 - Accès personnalisables à différents modèles de Switch (EXOS)
+
+### Architecture
+[!Archi(https://github.com/alpern95/oxiwificontrol-lab//archi.png)](https://github.com/alpern95/oxiwificontrol-lab)]]
+
  
 ### En France la loi indique:
 
