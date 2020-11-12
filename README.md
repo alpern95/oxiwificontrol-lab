@@ -34,6 +34,10 @@ Dans les établissements accueillant les enfants de moins de 3 ans, la loi inter
 Dans les classes des écoles primaires où la commune a installé du WiFi, il doit être coupé lorsqu'il n'est pas utilisé pour les activités pédagogiques. Pour toute nouvelle installation, la commune doit en informer au préalable le conseil d'école.
 
 ### Ref
-Nous utilisons le proxy ssl de [suyashkumar!](https://github.com/suyashkumar/ssl-proxy)
-Nous utilisons le serveur http de [kevinpollet](https://github.com/kevinpollet/srv/)
-Nous utilisons pour le fontend React-Admin [marmelab](https://github.com/marmelab/react-admin)
+- le proxy ssl de [suyashkumar!](https://github.com/suyashkumar/ssl-proxy)
+
+- le serveur http de [kevinpollet](https://github.com/kevinpollet/srv/)
+
+- le fontend React-Admin [marmelab](https://github.com/marmelab/react-admin)
+
+- le serveur restful api [go-restfull](github.com/emicklei/go-restful)
