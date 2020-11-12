@@ -36,3 +36,4 @@ Dans les classes des écoles primaires où la commune a installé du WiFi, il do
 ### Ref
 Nous utilisons le proxy ssl de [suyashkumar!](https://github.com/suyashkumar/ssl-proxy)
 Nous utilisons le serveur http de [kevinpollet](https://github.com/kevinpollet/srv/)
+Nous utilisons pour le fontend React-Admin [marmelab](https://github.com/marmelab/react-admin)
