@@ -44,13 +44,13 @@ Dans les classes des écoles primaires où la commune a installé du WiFi, il do
 
 ### SrcreenShots
 
-![login form](https://github.com/alperne95/oxiwificontrol/image1.png)
+![login form](https://github.com/alperne95/oxiwificontrol-lab/image1.png)
 
 
-![liste_bornes](https://github.com/alperne95/oxiwificontrol/image2.png)
+![liste_bornes](https://github.com/alperne95/oxiwificontrol-lab/image2.png)
 
 
-![stop_bornes](https://github.com/alperne95/oxiwificontrol/image3.png)
+![stop_bornes](https://github.com/alperne95/oxiwificontrol-lab/image3.png)
 
 
-![stop_bornes_1](https://github.com/alperne95/oxiwificontrol/image4.png)
+![stop_bornes_1](https://github.com/alperne95/oxiwificontrol-lab/image4.png)
