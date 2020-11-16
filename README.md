@@ -41,3 +41,16 @@ Dans les classes des écoles primaires où la commune a installé du WiFi, il do
 - le fontend React-Admin [marmelab](https://github.com/marmelab/react-admin)
 
 - le serveur restful api [go-restfull](github.com/emicklei/go-restful)
+
+### SrcreenShots
+
+![login form](https://github.com/alperne95/oxiwificontrol/2020-11-16 16_07_42-.png)
+
+
+![liste_bornes](https://github.com/alperne95/oxiwificontrol/2020-11-16 16_05_19-.png)
+
+
+![stop_bornes](https://github.com/alperne95/oxiwificontrol/2020-11-16 16_06_38-.png)
+
+
+![stop_bornes_1](https://github.com/alperne95/oxiwificontrol/2020-11-16 16_07_06-React App.png)
